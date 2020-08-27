@@ -1,6 +1,6 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {UsersService} from '../../api/users.service';
+import {UsersService} from '../api/users.service';
 import {NzNotificationService} from 'ng-zorro-antd';
 
 @Component({
