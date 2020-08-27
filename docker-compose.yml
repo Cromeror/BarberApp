@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb:10.2
+    container_name: barber-mysql-db-dev
+    #    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: barber_back
+      MYSQL_ROOT_PASSWORD: 123456
