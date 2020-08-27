@@ -1,0 +1,21 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login-form {
+  width: 350px;
+
+  &-margin {
+    margin-bottom: 16px;
+  }
+
+  &-forgot {
+    float: right;
+  }
+
+  &-button {
+    width: 100%;
+  }
+}

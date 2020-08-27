@@ -1,0 +1,75 @@
+<form nz-form [formGroup]="usersService.form" (ngSubmit)="registerUser()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
+      <span>Nombre</span>
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Por favor ingrese su nombre!">
+      <input nz-input id="name" formControlName="name"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="last_name" nzRequired>
+      <span>Apellidos</span>
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Por favor ingrese sus apellidos!">
+      <input nz-input id="last_name" formControlName="last_name"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone" nzRequired>Número de teléfono</nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      [nzValidateStatus]="form?.controls['phone']"
+      nzErrorTip="Por favor ingrese su número de teléfono!"
+    >
+      <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+        <ng-template #addOnBeforeTemplate>
+          <div style="margin: auto; font-size: 0.9em; line-height: 0.9em;">+57</div>
+        </ng-template>
+        <input formControlName="phone" id="'phone'" nz-input/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">E-mail</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="El correo ingresado no es válido!">
+      <input nz-input formControlName="email" id="email"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname">
+          <span> Apodo <i nz-icon nz-tooltip nzTooltipTitle="¿Quiere ser llamado por su sobre nombre?"
+                          nzType="question-circle"
+                          nzTheme="outline"></i>
+          </span>
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Por favor ingrese un alias!">
+      <input nz-input id="nickname" formControlName="nickname"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <label nz-checkbox formControlName="agree">
+        <span>Estoy de acuerdo con las <a>políticas de tratamiento de datos</a></span>
+      </label>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" type="submit" [disabled]="form.invalid">Registrarse</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #template>
+  <div class="ant-notification-notice-content">
+    <div class="ant-notification-notice-with-icon">
+      <span class="ant-notification-notice-icon"><i nz-icon nzType="smile" style="color: rgb(16, 142, 233);"></i></span>
+      <div class="ant-notification-notice-message">Usuario registrado</div>
+      <div class="ant-notification-notice-description">
+        El usuario fue registrado exitosamente.
+      </div>
+    </div>
+  </div>
+</ng-template>
