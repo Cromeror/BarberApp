@@ -1,0 +1,45 @@
+<nz-row nzJustify="center" nzAlign="middle" style="height: 100%;">
+  <nz-card nz-col nzSpan="10">
+    <div *ngIf="step === 0">
+      <ng-container *ngTemplateOutlet="clientIdentifier"></ng-container>
+    </div>
+    <div *ngIf="step === 1">
+      <ng-container *ngTemplateOutlet="serviceSelector"></ng-container>
+    </div>
+    <div *ngIf="step === 2">
+      <ng-container *ngTemplateOutlet="finishSelection"></ng-container>
+    </div>
+  </nz-card>
+</nz-row>
+
+<ng-template #clientIdentifier>
+  <nz-row nzJustify="center" nzAlign="middle">
+    <nz-row nzJustify="center" nzAlign="middle" nzGutter="12" (click)="step = 1">
+      <img nz-col src="assets/fingerprint.png" style="height: 100px;"/>
+      <h3 nz-col>Ubique el dedo índice en el sensor</h3>
+    </nz-row>
+    <nz-divider nzText="O"></nz-divider>
+    <button nz-button nzType="default" routerLink="/public/register" [queryParams]="{back: '/public/ticket'}">
+      Registrarse
+    </button>
+  </nz-row>
+</ng-template>
+
+<ng-template #serviceSelector>
+  <app-barber-services></app-barber-services>
+  <button nz-button nzType="primary" style="width: 100%;" (click)="step = 2">
+    Finalizar
+  </button>
+</ng-template>
+
+<ng-template #finishSelection>
+  <nz-row nzJustify="center" nzAlign="middle">
+    <h1 style="width: 100%; text-align: center;">Su turno es</h1>
+    <div style="font-size: 3rem;">01</div>
+    <nz-divider></nz-divider>
+    <div>
+      <span>Hora de atención aproximada </span>
+      <strong>09:00 AM</strong>
+    </div>
+  </nz-row>
+</ng-template>

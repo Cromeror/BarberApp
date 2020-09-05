@@ -1,0 +1,21 @@
+<nz-space nzDirection="vertical">
+
+  <nz-space-item nz-col nzSpan="24">
+    <nz-radio-group class="barber-service__gender-selector">
+      <label nz-radio-button nzValue="A">Caballero</label>
+      <label nz-radio-button nzValue="B">Dama</label>
+      <label nz-radio-button nzValue="C">Niño</label>
+    </nz-radio-group>
+  </nz-space-item>
+
+  <nz-space-item>
+    <nz-checkbox-wrapper style="width: 100%;">
+      <div nz-row>
+        <div nz-col nzSpan="24" *ngFor="let service of currentServices">
+          <label nz-checkbox nzValue="{{service.id}}" [ngModel]="false">{{service.service}}</label>
+        </div>
+      </div>
+    </nz-checkbox-wrapper>
+  </nz-space-item>
+
+</nz-space>

@@ -1,10 +1,5 @@
-<nz-layout class="register-client">
-  <app-default-header></app-default-header>
-  <nz-content>
-    <nz-row nzJustify="center" nzAlign="middle" style="height: 100%;">
-      <nz-col nzSpan="10">
-        <app-register-client-form></app-register-client-form>
-      </nz-col>
-    </nz-row>
-  </nz-content>
-</nz-layout>
+<nz-row nzJustify="center" nzAlign="middle" style="height: 100%;">
+  <nz-col nzSpan="10">
+    <app-register-client-form (successEvent)="successRegister()"></app-register-client-form>
+  </nz-col>
+</nz-row>

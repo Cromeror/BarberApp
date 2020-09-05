@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {UsersService} from '../api/users.service';
 import {NzNotificationService} from 'ng-zorro-antd';
@@ -9,17 +9,15 @@ import {NzNotificationService} from 'ng-zorro-antd';
   styleUrls: ['./register-client-form.component.scss'],
   providers: [UsersService]
 })
-export class RegisterClientFormComponent implements OnInit {
+export class RegisterClientFormComponent {
   @ViewChild('template') template: TemplateRef<any>;
+  @Output() successEvent = new EventEmitter();
 
   form!: FormGroup;
 
   constructor(public usersService: UsersService,
               private notification: NzNotificationService) {
     this.form = usersService.form;
-  }
-
-  ngOnInit(): void {
   }
 
   registerUser() {
@@ -32,6 +30,7 @@ export class RegisterClientFormComponent implements OnInit {
       .subscribe(() => {
         this.form.reset();
         this.notification.template(this.template);
+        this.successEvent.emit(this.form.value);
       });
   }
 }
