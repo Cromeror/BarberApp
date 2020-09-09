@@ -1,0 +1,45 @@
+<nz-row nzJustify="end">
+  <button nz-button nzType="primary" (click)="modalTitle='Agregar servicio'; showModal = true;">
+    <i nz-icon nzType="plus" nzTheme="outline"></i>
+    <span>agregar</span>
+  </button>
+</nz-row>
+
+<nz-table>
+  <thead>
+  <tr>
+    <th>Servicio</th>
+    <th>Valor</th>
+    <th>cliente</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of servicesList?.data">
+    <td>{{ data.name }}</td>
+    <td>{{ data.price }}</td>
+    <td>{{ data.gender }}</td>
+    <td nz-row nzJustify="end">
+      <a (click)="this.values = data; modalTitle='Editar servicio';showModal = true;">editar</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a>eliminar</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<ng-template #template>
+  <div class="ant-notification-notice-content">
+    <div class="ant-notification-notice-with-icon">
+      <span class="ant-notification-notice-icon"><i nz-icon nzType="smile" style="color: rgb(16, 142, 233);"></i></span>
+      <div class="ant-notification-notice-message">Creación de servicio</div>
+      <div class="ant-notification-notice-description">
+        Servicio creado exitosamente.
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-dialog-form-service [isVisible]="showModal" [title]="modalTitle" [values]="values"
+                         (closedEvent)="showModal = $event; refreshServices();">
+</app-dialog-form-service>
