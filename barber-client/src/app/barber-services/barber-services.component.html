@@ -1,21 +1,27 @@
-<nz-space nzDirection="vertical">
+<form nz-form [formGroup]="form" style="min-height: 150px;">
+  <nz-space nzDirection="vertical" style="width: 100%;">
+    <nz-space-item nz-col nzSpan="24">
+      <nz-radio-group class="barber-service__gender-selector" formControlName="gender">
+        <label nz-radio-button nzValue="man">Caballero</label>
+        <label nz-radio-button nzValue="woman">Dama</label>
+        <label nz-radio-button nzValue="boy">Niño</label>
+      </nz-radio-group>
+    </nz-space-item>
 
-  <nz-space-item nz-col nzSpan="24">
-    <nz-radio-group class="barber-service__gender-selector">
-      <label nz-radio-button nzValue="A">Caballero</label>
-      <label nz-radio-button nzValue="B">Dama</label>
-      <label nz-radio-button nzValue="C">Niño</label>
-    </nz-radio-group>
-  </nz-space-item>
-
-  <nz-space-item>
-    <nz-checkbox-wrapper style="width: 100%;">
-      <div nz-row>
-        <div nz-col nzSpan="24" *ngFor="let service of currentServices">
-          <label nz-checkbox nzValue="{{service.id}}" [ngModel]="false">{{service.service}}</label>
+    <nz-space-item>
+      <nz-checkbox-wrapper *ngIf="currentServices?.length > 0; else emptyData">
+        <div nz-row formArrayName="services">
+          <div nz-col nzSpan="24" *ngFor="let service of currentServices; let i = index;">
+            <div formGroupName="{{i}}">
+              <label nz-checkbox nzValue="{{service.id}}" formControlName="selected">{{service.name}}</label>
+            </div>
+          </div>
         </div>
-      </div>
-    </nz-checkbox-wrapper>
-  </nz-space-item>
+      </nz-checkbox-wrapper>
+    </nz-space-item>
+  </nz-space>
+</form>
 
-</nz-space>
+<ng-template #emptyData>
+  <nz-empty></nz-empty>
+</ng-template>

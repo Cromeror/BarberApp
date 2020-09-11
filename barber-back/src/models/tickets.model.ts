@@ -6,10 +6,19 @@ import {HookReturn} from 'sequelize/types/lib/hooks';
 
 export default function (app: Application): typeof Model {
   const sequelizeClient: Sequelize = app.get('sequelizeClient');
-  const services = sequelizeClient.define('services', {
-    name: {type: DataTypes.STRING, allowNull: false, unique: true},
-    price: {type: DataTypes.INTEGER, allowNull: false},
-    gender: {type: DataTypes.STRING, allowNull: false},
+  const tickets = sequelizeClient.define('tickets', {
+    position: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    finish_date: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    start_date: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {
@@ -19,10 +28,11 @@ export default function (app: Application): typeof Model {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (services as any).associate = function (models: any): void {
+  (tickets as any).associate = function (models: any): void {
+    tickets.belongsTo(models.users);
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
   };
 
-  return services;
+  return tickets;
 }

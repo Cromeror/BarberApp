@@ -26,8 +26,8 @@
 </ng-template>
 
 <ng-template #serviceSelector>
-  <app-barber-services></app-barber-services>
-  <button nz-button nzType="primary" style="width: 100%;" (click)="step = 2">
+  <app-barber-services #barberService></app-barber-services>
+  <button nz-button nzType="primary" style="width: 100%;" (click)="createTicket();">
     Finalizar
   </button>
 </ng-template>

@@ -28,8 +28,8 @@ export class ServicesService {
     return this.http.patch<Service>(`api/services/${id}`, service);
   }
 
-  all(): Observable<PaginateService> {
-    return this.http.get<PaginateService>('api/services');
+  all(params?: { gender?: string }): Observable<PaginateService> {
+    return this.http.get<PaginateService>('api/services', {params});
   }
 }
 
