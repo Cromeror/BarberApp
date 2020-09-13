@@ -1,0 +1,66 @@
+<nz-space nzDirection="vertical" style="width: 100%;">
+  <nz-space-item>
+    <nz-col nzSpan="24" style="display: flex; justify-content: space-between; align-items: center;">
+      <ng-container *ngIf="loginMethod === 'FINGERPRINT'">
+        <ng-container *ngTemplateOutlet="loginWithFingerprint"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="loginMethod ==='PHONE'">
+        <ng-container *ngTemplateOutlet="loginWithPhone"></ng-container>
+      </ng-container>
+      <ng-container *ngIf="loginMethod === 'EMAIl'">
+        <ng-container *ngTemplateOutlet="loginWithEmail"></ng-container>
+      </ng-container>
+    </nz-col>
+  </nz-space-item>
+  <nz-space-item>
+    <nz-col nzSpan="24" style="display: flex; justify-content: flex-end;">
+      <nz-space>
+        <nz-space-item>
+          <button nz-button nzType="dashed" nzShape="circle" (click)="selectLoginMethod('FINGERPRINT')"
+                  [class.login-method--btn-active]="loginMethod === 'FINGERPRINT'">
+            <img src="assets/fingerprint-scanning.png" style="height: 20px;"/>
+          </button>
+        </nz-space-item>
+        <nz-space-item>
+          <button nz-button nzType="dashed" nzShape="circle" (click)="selectLoginMethod('PHONE')"
+                  [class.login-method--btn-active]="loginMethod === 'PHONE'">
+            <i nz-icon nzType="phone"></i>
+          </button>
+        </nz-space-item>
+        <nz-space-item>
+          <button nz-button nzType="dashed" nzShape="circle" (click)="selectLoginMethod('EMAIl')"
+                  [class.login-method--btn-active]="loginMethod === 'EMAIl'">
+            <i nz-icon nzType="mail"></i>
+          </button>
+        </nz-space-item>
+      </nz-space>
+    </nz-col>
+  </nz-space-item>
+</nz-space>
+
+<ng-template #loginWithFingerprint>
+  <img nz-col src="assets/fingerprint.png" style="height: 100px;"/>
+  <h3 nz-col>Ubique el dedo índice en el sensor</h3>
+</ng-template>
+
+<ng-template #loginWithPhone>
+  <div class="login-method__ic-container">
+    <i nz-icon nzType="phone"></i>
+  </div>
+  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+    <input type="text" nz-input placeholder="Ingrese su número de teléfono"/>
+  </nz-input-group>
+</ng-template>
+
+<ng-template #loginWithEmail>
+  <div class="login-method__ic-container">
+    <i nz-icon nzType="mail"></i>
+  </div>
+  <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+    <input type="email" nz-input placeholder="Ingrese su correo electrónico"/>
+  </nz-input-group>
+</ng-template>
+
+<ng-template #suffixIconButton>
+  <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+</ng-template>

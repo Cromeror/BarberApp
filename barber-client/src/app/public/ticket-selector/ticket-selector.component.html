@@ -14,14 +14,20 @@
 
 <ng-template #clientIdentifier>
   <nz-row nzJustify="center" nzAlign="middle">
-    <nz-row nzJustify="center" nzAlign="middle" nzGutter="12" (click)="step = 1">
-      <img nz-col src="assets/fingerprint.png" style="height: 100px;"/>
-      <h3 nz-col>Ubique el dedo índice en el sensor</h3>
-    </nz-row>
-    <nz-divider nzText="O"></nz-divider>
-    <button nz-button nzType="default" routerLink="/public/register" [queryParams]="{back: '/public/ticket'}">
-      Registrarse
-    </button>
+    <app-client-login-method nz-col nzSpan="20"></app-client-login-method>
+
+    <nz-divider></nz-divider>
+
+    <nz-space>
+      <nz-space-item>
+        <span (click)="step = 1;">No tienes cuenta en Yanior Barber?</span>
+      </nz-space-item>
+      <nz-space-item>
+        <a routerLink="/public/register" [queryParams]="{back: '/public/ticket'}">
+          Regístrate
+        </a>
+      </nz-space-item>
+    </nz-space>
   </nz-row>
 </ng-template>
 

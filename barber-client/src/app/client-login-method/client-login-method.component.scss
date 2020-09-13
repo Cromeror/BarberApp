@@ -1,0 +1,21 @@
+.login-method {
+  &__ic-container {
+    border: 4px solid;
+    border-radius: 70px;
+    padding: 12px;
+    margin-right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & i {
+      font-size: 70px;
+    }
+  }
+
+  &--btn-active {
+    color: #40a9ff;
+    background-color: #fff;
+    border-color: #40a9ff;
+  }
+}

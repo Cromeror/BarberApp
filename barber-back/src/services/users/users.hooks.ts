@@ -9,7 +9,7 @@ const {hashPassword, protect} = local.hooks;
 export default {
   before: {
     all: [],
-    find: [authenticate('jwt')],
+    find: [/*authenticate('jwt')*/],
     get: [authenticate('jwt')],
     create: [
       async (context: HookContext) => {
