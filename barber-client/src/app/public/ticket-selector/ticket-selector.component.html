@@ -1,5 +1,5 @@
 <nz-row nzJustify="center" nzAlign="middle" style="height: 100%;">
-  <nz-card nz-col nzSpan="10">
+  <nz-card nz-col nzSpan="10" nzTitle="{{title}}">
     <div *ngIf="step === 0">
       <ng-container *ngTemplateOutlet="clientIdentifier"></ng-container>
     </div>
@@ -9,12 +9,15 @@
     <div *ngIf="step === 2">
       <ng-container *ngTemplateOutlet="finishSelection"></ng-container>
     </div>
+    <div *ngIf="step === 3">
+      <ng-container *ngTemplateOutlet="selectMyUser"></ng-container>
+    </div>
   </nz-card>
 </nz-row>
 
 <ng-template #clientIdentifier>
   <nz-row nzJustify="center" nzAlign="middle">
-    <app-client-login-method nz-col nzSpan="20"></app-client-login-method>
+    <app-client-login-method nz-col nzSpan="20" (submitEvent)="searchClient($event)"></app-client-login-method>
 
     <nz-divider></nz-divider>
 
@@ -48,4 +51,19 @@
       <strong>09:00 AM</strong>
     </div>
   </nz-row>
+</ng-template>
+
+<ng-template #selectMyUser>
+  <app-user-list [users]="users" (selectedEvent)="client = $event; step = 1"></app-user-list>
+  <nz-divider></nz-divider>
+  <nz-space>
+    <nz-space-item>
+      <span>Su usuario no aparece en la lista? </span>
+    </nz-space-item>
+    <nz-space-item>
+      <a routerLink="/public/register" [queryParams]="{back: '/public/ticket'}">
+        Regístrate
+      </a>
+    </nz-space-item>
+  </nz-space>
 </ng-template>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-client-login-method',
@@ -6,9 +6,10 @@ import {Component} from '@angular/core';
   styleUrls: ['./client-login-method.component.scss']
 })
 export class ClientLoginMethodComponent {
-  loginMethod: LoginType;
+  @Output() submitEvent = new EventEmitter<{ value: string, type: LoginType }>();
 
-  // @Output()
+  loginMethod: LoginType;
+  currentValue: string;
 
   constructor() {
     this.loginMethod = LoginType.FINGERPRINT;
@@ -31,6 +32,12 @@ export class ClientLoginMethodComponent {
     }
   }
 
+  submitValue(): void {
+    this.submitEvent.emit({
+      value: this.currentValue,
+      type: this.loginMethod
+    });
+  }
 }
 
-enum LoginType {FINGERPRINT = 'FINGERPRINT', PHONE = 'PHONE', EMAIl = 'EMAIl' }
+export enum LoginType {FINGERPRINT = 'FINGERPRINT', PHONE = 'PHONE', EMAIl = 'EMAIl' }

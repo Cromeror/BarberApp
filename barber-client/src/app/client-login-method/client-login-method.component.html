@@ -48,7 +48,8 @@
     <i nz-icon nzType="phone"></i>
   </div>
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="text" nz-input placeholder="Ingrese su número de teléfono"/>
+    <input type="text" nz-input placeholder="Ingrese su número de teléfono"
+           (change)="currentValue = $event.target.value;"/>
   </nz-input-group>
 </ng-template>
 
@@ -57,10 +58,13 @@
     <i nz-icon nzType="mail"></i>
   </div>
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-    <input type="email" nz-input placeholder="Ingrese su correo electrónico"/>
+    <input type="email" nz-input placeholder="Ingrese su correo electrónico"
+           (change)="currentValue = $event.target.value;"/>
   </nz-input-group>
 </ng-template>
 
 <ng-template #suffixIconButton>
-  <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+  <button nz-button nzType="primary" nzSearch (click)="submitValue()">
+    <i nz-icon nzType="search"></i>
+  </button>
 </ng-template>

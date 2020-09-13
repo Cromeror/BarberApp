@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {UsersService} from '../api/users.service';
+import {UserService} from '../api/user.service';
 import {NzNotificationService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-register-client-form',
   templateUrl: './register-client-form.component.html',
   styleUrls: ['./register-client-form.component.scss'],
-  providers: [UsersService]
+  providers: [UserService]
 })
 export class RegisterClientFormComponent {
   @ViewChild('template') template: TemplateRef<any>;
@@ -15,7 +15,7 @@ export class RegisterClientFormComponent {
 
   form!: FormGroup;
 
-  constructor(public usersService: UsersService,
+  constructor(public usersService: UserService,
               private notification: NzNotificationService) {
     this.form = usersService.form;
   }

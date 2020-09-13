@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Pagination} from './utils/pagination';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UserService {
   form: FormGroup;
 
   constructor(private http: HttpClient,
@@ -25,9 +26,19 @@ export class UsersService {
   create(user: User): Observable<User> {
     return this.http.post<User>('api/users', user);
   }
+
+  all(params?: UserParams): Observable<PaginateUser> {
+    return this.http.get<PaginateUser>('api/users', {params: {...params}});
+  }
 }
 
-export class User {
+interface UserParams {
+  email?: string;
+  phone?: string;
+}
+
+export interface User {
+  id?: number;
   name: string;
   // tslint:disable-next-line:variable-name
   last_name: string;
@@ -35,4 +46,11 @@ export class User {
   email?: string;
   password?: string;
   nickname?: string;
+}
+
+export class PaginateUser implements Pagination {
+  limit: number;
+  skip: number;
+  total: number;
+  data: User[];
 }
