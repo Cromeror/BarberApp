@@ -1,20 +1,24 @@
 <nz-layout class="queue-view">
-  <nz-row><span>Yánior Barber</span></nz-row>
-  <nz-row>
+  <nz-row nzAlign="middle" class="queue-view--default-padding">
+    <img src="assets/yanior-barber-logo.png" style="height: 42px;"/>
+    <img src="assets/yanior-barber.png" style="height: 24px;"/>
+  </nz-row>
+  <nz-row class="queue-view--default-padding">
     <div nz-col nzSpan="16">
-      <div>Video</div>
+      <div style="height: 100%;">Video</div>
       <div>
         <nz-row nzGutter="24">
           <nz-col nzSpan="12">
-            <nz-row nzJustify="space-between">
+            <nz-row nzJustify="space-between" nzAlign="bottom">
               <span class="queue-view--title">Atendiendo</span>
               <span class="queue-view--sub-title">Turno</span>
             </nz-row>
             <nz-divider></nz-divider>
             <app-item-position></app-item-position>
           </nz-col>
+
           <nz-col nzSpan="12">
-            <nz-row nzJustify="space-between">
+            <nz-row nzJustify="space-between" nzAlign="bottom">
               <span class="queue-view--title">Atendiendo</span>
               <span class="queue-view--sub-title">Turno</span>
             </nz-row>

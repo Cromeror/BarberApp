@@ -25,10 +25,22 @@
 
   &--title {
     @extend .queue-view--spacing;
+    $size: 1.3rem;
+    font-size: $size;
     font-weight: bold;
+    height: $size;
+    line-height: $size;
   }
 
   &--sub-title {
     @extend .queue-view--spacing;
+    $size: 1rem;
+    font-size: $size;
+    height: $size;
+    line-height: $size;
+  }
+
+  &--default-padding {
+    padding: 12px 24px;
   }
 }
