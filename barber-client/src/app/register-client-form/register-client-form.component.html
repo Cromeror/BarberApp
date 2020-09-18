@@ -1,6 +1,6 @@
 <form nz-form [formGroup]="usersService.form" (ngSubmit)="registerUser()">
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="name" nzRequired>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="name" nzRequired>
       <span>Nombre</span>
     </nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Por favor ingrese su nombre!">
@@ -8,15 +8,40 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="last_name" nzRequired>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="last_name" nzRequired>
       <span>Apellidos</span>
     </nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Por favor ingrese sus apellidos!">
       <input nz-input id="last_name" formControlName="last_name"/>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone" nzRequired>Número de teléfono</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="gender" nzRequired>
+      <span nz-col nzSm="13">Género</span>
+    </nz-form-label>
+    <nz-form-control [nzSm]="6" [nzXs]="24"
+                     [nzValidateStatus]="form?.controls['gender']"
+                     nzErrorTip="Por favor seleccione una opción">
+      <nz-select formControlName="gender" id="gender">
+        <nz-option
+          *ngFor="let option of genderService.getGenderOption()"
+          [nzValue]="option.value" [nzLabel]="option.name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+
+    <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="age" nzRequired>Edad</nz-form-label>
+    <nz-form-control [nzSm]="4" [nzXs]="24"
+                     [nzValidateStatus]="form?.controls['age']"
+                     nzErrorTip="Por favor ingrese su edad!">
+      <nz-input-group>
+        <input nz-input formControlName="age" id="age" type="number" [min]="0"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="phone" nzRequired>Número de teléfono</nz-form-label>
     <nz-form-control
       [nzSm]="14"
       [nzXs]="24"
@@ -32,13 +57,13 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">E-mail</nz-form-label>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="email">E-mail</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="El correo ingresado no es válido!">
       <input nz-input formControlName="email" id="email"/>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname">
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="nickname">
           <span> Apodo <i nz-icon nz-tooltip nzTooltipTitle="¿Quiere ser llamado por su sobre nombre?"
                           nzType="question-circle"
                           nzTheme="outline"></i>
@@ -55,10 +80,10 @@
       </label>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item nz-row class="register-area">
-    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+  <nz-form-item nz-row nzJustify="center">
+    <div nz-col nzSpan="20" style="display: flex; justify-content: flex-end;">
       <button nz-button nzType="primary" type="submit" [disabled]="form.invalid">Registrarse</button>
-    </nz-form-control>
+    </div>
   </nz-form-item>
 </form>
 

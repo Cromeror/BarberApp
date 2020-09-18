@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {BarberServicesComponent} from './barber-services.component';
 import {NzCheckboxModule, NzEmptyModule, NzFormModule, NzGridModule, NzRadioModule} from 'ng-zorro-antd';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NzSpaceModule} from 'ng-zorro-antd/space';
 import {ServicesService} from '../api/services.service';
 
 @NgModule({
@@ -15,7 +14,6 @@ import {ServicesService} from '../api/services.service';
     NzGridModule,
     NzCheckboxModule,
     FormsModule,
-    NzSpaceModule,
     NzFormModule,
     ReactiveFormsModule,
     NzEmptyModule

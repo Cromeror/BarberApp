@@ -36,6 +36,18 @@ export default function (app: Application): typeof Model {
       type: DataTypes.BOOLEAN,
       allowNull: true
     },
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    grown_state: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {

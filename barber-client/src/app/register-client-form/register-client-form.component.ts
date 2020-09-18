@@ -2,6 +2,9 @@ import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/
 import {FormGroup} from '@angular/forms';
 import {UserService} from '../api/user.service';
 import {NzNotificationService} from 'ng-zorro-antd';
+import {GrownStateService} from '../utils/grown-state.service';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {GenderService} from '../utils/gender.service';
 
 @Component({
   selector: 'app-register-client-form',
@@ -16,8 +19,16 @@ export class RegisterClientFormComponent {
   form!: FormGroup;
 
   constructor(public usersService: UserService,
-              private notification: NzNotificationService) {
+              public genderService: GenderService,
+              private notification: NzNotificationService,
+              private grownStateService: GrownStateService) {
     this.form = usersService.form;
+    this.form.get('age').valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe((age: number) => {
+        const grownState = this.grownStateService.classifyGrownState(age);
+        this.form.patchValue({grown_state: grownState});
+      });
   }
 
   registerUser() {

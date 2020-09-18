@@ -16,6 +16,9 @@ export class UserService {
       name: [null, Validators.required],
       last_name: [null, Validators.required],
       phone: [null, Validators.required],
+      age: [null, Validators.required],
+      gender: [null, Validators.required],
+      grown_state: [null, Validators.required],
       email: [null, Validators.email],
       password: [null],
       nickname: [null],
@@ -35,6 +38,7 @@ export class UserService {
 interface UserParams {
   email?: string;
   phone?: string;
+  age?: string;
 }
 
 export interface User {
@@ -43,6 +47,9 @@ export interface User {
   // tslint:disable-next-line:variable-name
   last_name: string;
   phone: string;
+  age: number;
+  gender: 'man' | 'woman';
+  grown_state: 'kids' | 'teen' | 'adult';
   email?: string;
   password?: string;
   nickname?: string;

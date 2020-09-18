@@ -63,4 +63,10 @@ export class TicketSelectorComponent {
         this.step = 3;
       });
   }
+
+  selectClient(event: any) {
+    this.client = event;
+    this.barberServiceItem.refreshServices(event.grown_state, event.gender);
+    this.step = 1;
+  }
 }

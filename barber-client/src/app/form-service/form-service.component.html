@@ -10,7 +10,35 @@
     </nz-col>
   </nz-row>
 
+  <nz-col nzSpan="12" nzSm="24">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzSm="9" nzFor="grown_state">Etapa de crecimiento</nz-form-label>
+      <nz-form-control [nzSpan]="18" nzSm="15">
+        <nz-select formControlName="grown_state" id="grown_state">
+          <nz-option
+            *ngFor="let option of grownStateService.getGrownStateOptions()"
+            [nzValue]="option.value"
+            [nzLabel]="option.name"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-col>
+
   <nz-row nzGutter="12">
+    <nz-col nzSpan="12" nzSm="15">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="12" nzFor="gender">Género</nz-form-label>
+        <nz-form-control [nzSpan]="12">
+          <nz-select formControlName="gender" id="gender">
+            <nz-option
+              *ngFor="let option of genderService.getGenderOption()"
+              [nzValue]="option.value"
+              [nzLabel]="option.name"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </nz-col>
+
     <nz-col nzSpan="12" nzSm="9">
       <nz-form-item>
         <nz-form-label nzSpan="12" nzSm="10" nzFor="price">Precio</nz-form-label>
@@ -24,18 +52,6 @@
         </nz-form-control>
       </nz-form-item>
     </nz-col>
-
-    <nz-col nzSpan="12" nzSm="15">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="12" nzFor="gender">Género asociado</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-          <nz-select formControlName="gender" id="gender">
-            <nz-option nzValue="man" nzLabel="Hombre"></nz-option>
-            <nz-option nzValue="woman" nzLabel="Mujer"></nz-option>
-            <nz-option nzValue="boy" nzLabel="Niño"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </nz-col>
   </nz-row>
+
 </form>

@@ -16,7 +16,8 @@ export class ServicesService {
       id: [null],
       name: [null, Validators.required],
       price: [null, Validators.required],
-      gender: [null, Validators.required]
+      gender: [null, Validators.required],
+      grown_state: [null, Validators.required]
     });
   }
 
@@ -28,16 +29,23 @@ export class ServicesService {
     return this.http.patch<Service>(`api/services/${id}`, service);
   }
 
-  all(params?: { gender?: string }): Observable<PaginateService> {
-    return this.http.get<PaginateService>('api/services', {params});
+  all(params?: ServiceParam): Observable<PaginateService> {
+    return this.http.get<PaginateService>('api/services', {params: {...params}});
   }
+}
+
+export interface ServiceParam {
+  gender?: string;
+  grown_stage?: string;
 }
 
 export class Service {
   id?: number;
   name: string;
   price: number;
-  gender: 'man' | 'woman' | 'boy';
+  gender: 'adult' | 'teen' | 'kid';
+  // tslint:disable-next-line:variable-name
+  grown_state: 'man' | 'woman' | 'other';
 }
 
 export class PaginateService implements Pagination {

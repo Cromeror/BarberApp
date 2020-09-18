@@ -13,18 +13,14 @@ export class BarberServicesComponent {
 
   constructor(private services: ServicesService, private fb: FormBuilder) {
     this.form = this.fb.group({
-      gender: ['man'],
       services: this.fb.array([])
     });
-    this.refreshServices();
-    this.form.get('gender').valueChanges
-      .subscribe((gender: string) => this.refreshServices(gender));
   }
 
-  refreshServices(gender = 'man'): void {
+  refreshServices(grownState: string, gender = 'man'): void {
     const serviceArray = this.form.get('services') as FormArray;
     serviceArray.clear();
-    this.services.all({gender})
+    this.services.all({grown_state: grownState, gender})
       .subscribe((paginateService: PaginateService) => {
         paginateService.data.forEach((service: Service) => {
           serviceArray.push(this.fb.group({

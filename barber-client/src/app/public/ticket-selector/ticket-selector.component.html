@@ -3,7 +3,7 @@
     <div *ngIf="step === 0">
       <ng-container *ngTemplateOutlet="clientIdentifier"></ng-container>
     </div>
-    <div *ngIf="step === 1">
+    <div [hidden]="step !== 1">
       <ng-container *ngTemplateOutlet="serviceSelector"></ng-container>
     </div>
     <div *ngIf="step === 2">
@@ -54,7 +54,7 @@
 </ng-template>
 
 <ng-template #selectMyUser>
-  <app-user-list [users]="users" (selectedEvent)="client = $event; step = 1"></app-user-list>
+  <app-user-list [users]="users" (selectedEvent)="selectClient($event)"></app-user-list>
   <nz-divider></nz-divider>
   <nz-space>
     <nz-space-item>
