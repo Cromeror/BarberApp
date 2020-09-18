@@ -36,7 +36,7 @@ export class ServicesService {
 
 export interface ServiceParam {
   gender?: string;
-  grown_stage?: string;
+  grown_state?: string;
 }
 
 export class Service {

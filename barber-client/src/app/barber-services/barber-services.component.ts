@@ -20,7 +20,11 @@ export class BarberServicesComponent {
   refreshServices(grownState: string, gender = 'man'): void {
     const serviceArray = this.form.get('services') as FormArray;
     serviceArray.clear();
-    this.services.all({grown_state: grownState, gender})
+    const params = {grown_state: grownState, gender};
+    if (gender === 'woman') {
+      delete params.grown_state;
+    }
+    this.services.all(params)
       .subscribe((paginateService: PaginateService) => {
         paginateService.data.forEach((service: Service) => {
           serviceArray.push(this.fb.group({
