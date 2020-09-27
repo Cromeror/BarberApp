@@ -67,6 +67,7 @@ export class TicketSelectorComponent {
   selectClient(event: any) {
     this.client = event;
     this.barberServiceItem.refreshServices(event.grown_state, event.gender);
+    this.title = 'Seleccione el servicio que desea';
     this.step = 1;
   }
 }
