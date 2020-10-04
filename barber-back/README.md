@@ -1,6 +1,8 @@
 # barber-back
 
-> 
+>
+## Migración 
+sequelize migration:create --name="meaningful-name"
 
 ## About
 

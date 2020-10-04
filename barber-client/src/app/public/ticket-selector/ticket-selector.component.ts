@@ -24,7 +24,7 @@ export class TicketSelectorComponent {
   }
 
   createTicket(): void {
-    this.ticketsService.create({userId: this.client.id, position: 1})
+    this.ticketsService.create({userId: this.client.id, position: 1, active: true})
       .pipe(tap(
         (resTicket: Tickets) => {
           this.barberServiceItem.bValue.forEach((serviceId: number) => {

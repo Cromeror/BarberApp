@@ -8,6 +8,7 @@ import {es_ES, NZ_I18N} from 'ng-zorro-antd/i18n';
 import {registerLocaleData} from '@angular/common';
 import es from '@angular/common/locales/es';
 import {RouterModule, Routes} from '@angular/router';
+import {RealtimeApiService} from './api/realtime-api.service';
 
 registerLocaleData(es);
 
@@ -30,7 +31,7 @@ const routes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [{provide: NZ_I18N, useValue: es_ES}],
+  providers: [{provide: NZ_I18N, useValue: es_ES}, RealtimeApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

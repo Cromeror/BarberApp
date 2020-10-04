@@ -29,6 +29,7 @@ export interface Tickets {
   id?: number;
   position: number;
   userId: number;
+  active: boolean;
   // tslint:disable-next-line:variable-name
   finish_date?: string;
   // tslint:disable-next-line:variable-name

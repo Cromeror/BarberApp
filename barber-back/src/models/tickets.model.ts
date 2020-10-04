@@ -19,6 +19,10 @@ export default function (app: Application): typeof Model {
       type: DataTypes.DATE,
       allowNull: true
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {
@@ -30,6 +34,7 @@ export default function (app: Application): typeof Model {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (tickets as any).associate = function (models: any): void {
     tickets.belongsTo(models.users);
+    tickets.hasMany(models.ticket_services);
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
   };
