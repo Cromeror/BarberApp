@@ -17,7 +17,8 @@ export default function (app: Application): typeof Model {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (ticketServices as any).associate = function (models: any): void {
     ticketServices.belongsTo(models.tickets);
-    ticketServices.hasMany(models.services, {as: 'services'});
+    ticketServices.belongsTo(models.services);
+    // ticketServices.hasMany(models.services, {as: 'services'});
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
   };

@@ -7,9 +7,11 @@ export default {
       async (context: HookContext) => {
         const models = context.app.get('sequelizeClient').models;
         context.params.sequelize = {
+          where: {active: true},
           include: [{
             model: models.ticket_services,
-            include: [{model: models.services, as: 'services'}]
+            attributes: ['id'],
+            include: [{model: models.services, attributes: {exclude: ['updatedAt', 'createdAt']}}]
           }],
           raw: false
         };

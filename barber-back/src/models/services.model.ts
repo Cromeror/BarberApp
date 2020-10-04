@@ -24,6 +24,7 @@ export default function (app: Application): typeof Model {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (services as any).associate = function (models: any): void {
+    services.hasMany(models.ticket_services, {as: 'services'});
     // services.belongsToMany(models.tickets, {as: 'TicketServices', through: ticketServices});
     // models.tickets.belongsToMany(models.services, {as: 'TicketServices', through: ticketServices});
     // Define associations here
