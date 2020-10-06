@@ -5,6 +5,7 @@ import * as io from 'socket.io-client';
 import feathers from '@feathersjs/feathers';
 import feathersSocketIOClient from '@feathersjs/socketio-client';
 import {Observable} from 'rxjs';
+import {PaginateTicket} from './tickets.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class RealtimeApiService {
       }));
   }
 
-  onMonitor(limit: number): Observable<any> {
-    return this.feathersInstance.service('ticket-monitor')
+  onMonitor(limit: number): Observable<PaginateTicket> {
+    return this.feathersInstance.service('tickets')
       .watch()
       .find({
         query: {

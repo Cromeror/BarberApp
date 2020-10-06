@@ -1,13 +1,13 @@
 <nz-space nzDirection="vertical" style="width: 100%;">
   <nz-space-item>
     <nz-col nzSpan="24" style="display: flex; justify-content: space-between; align-items: center;">
-      <ng-container *ngIf="loginMethod === 'FINGERPRINT'">
+      <ng-container *ngIf="loginType === 'FINGERPRINT'">
         <ng-container *ngTemplateOutlet="loginWithFingerprint"></ng-container>
       </ng-container>
-      <ng-container *ngIf="loginMethod ==='PHONE'">
+      <ng-container *ngIf="loginType ==='PHONE'">
         <ng-container *ngTemplateOutlet="loginWithPhone"></ng-container>
       </ng-container>
-      <ng-container *ngIf="loginMethod === 'EMAIl'">
+      <ng-container *ngIf="loginType === 'EMAIl'">
         <ng-container *ngTemplateOutlet="loginWithEmail"></ng-container>
       </ng-container>
     </nz-col>
@@ -17,19 +17,19 @@
       <nz-space>
         <nz-space-item>
           <button nz-button nzType="dashed" nzShape="circle" (click)="selectLoginMethod('FINGERPRINT')"
-                  [class.login-method--btn-active]="loginMethod === 'FINGERPRINT'">
+                  [class.login-method--btn-active]="loginType === 'FINGERPRINT'">
             <img src="assets/fingerprint-scanning.png" style="height: 20px;"/>
           </button>
         </nz-space-item>
         <nz-space-item>
           <button nz-button nzType="dashed" nzShape="circle" (click)="selectLoginMethod('PHONE')"
-                  [class.login-method--btn-active]="loginMethod === 'PHONE'">
+                  [class.login-method--btn-active]="loginType === 'PHONE'">
             <i nz-icon nzType="phone"></i>
           </button>
         </nz-space-item>
         <nz-space-item>
           <button nz-button nzType="dashed" nzShape="circle" (click)="selectLoginMethod('EMAIl')"
-                  [class.login-method--btn-active]="loginMethod === 'EMAIl'">
+                  [class.login-method--btn-active]="loginType === 'EMAIl'">
             <i nz-icon nzType="mail"></i>
           </button>
         </nz-space-item>
@@ -49,7 +49,7 @@
   </div>
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
     <input type="text" nz-input placeholder="Ingrese su número de teléfono"
-           (change)="currentValue = $event.target.value;"/>
+           [defaultValue]="value" (change)="currentValue = $event.target.value;"/>
   </nz-input-group>
 </ng-template>
 

@@ -1,41 +1,58 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-client-login-method',
   templateUrl: './client-login-method.component.html',
   styleUrls: ['./client-login-method.component.scss']
 })
-export class ClientLoginMethodComponent {
+export class ClientLoginMethodComponent implements OnChanges {
   @Output() submitEvent = new EventEmitter<{ value: string, type: LoginType }>();
+  @Input() method: LoginType;
+  @Input() value = '';
 
-  loginMethod: LoginType;
-  currentValue: string;
+  loginType: LoginType;
+  currentValue = '';
 
   constructor() {
-    this.loginMethod = LoginType.FINGERPRINT;
+    this.loginType = LoginType.FINGERPRINT;
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.method?.previousValue !== changes.method?.currentValue) {
+      this.selectLoginMethod(changes.method.currentValue);
+    }
+    if (changes.value?.previousValue !== changes.value?.currentValue) {
+      this.currentValue = changes.value.currentValue;
+    }
+  }
+
+  /**
+   * change the selection of login type method
+   *
+   * @param selectedMethod: LoginType
+   */
   selectLoginMethod(selectedMethod: LoginType | string): void {
     switch (selectedMethod) {
       case LoginType.FINGERPRINT:
-        this.loginMethod = LoginType.FINGERPRINT;
+        this.loginType = LoginType.FINGERPRINT;
         break;
       case LoginType.PHONE:
-        this.loginMethod = LoginType.PHONE;
+        this.loginType = LoginType.PHONE;
         break;
       case LoginType.EMAIl:
-        this.loginMethod = LoginType.EMAIl;
+        this.loginType = LoginType.EMAIl;
         break;
       default:
-        this.loginMethod = LoginType.FINGERPRINT;
+        this.loginType = LoginType.FINGERPRINT;
         break;
     }
+    this.currentValue = '';
   }
 
   submitValue(): void {
     this.submitEvent.emit({
       value: this.currentValue,
-      type: this.loginMethod
+      type: this.loginType
     });
   }
 }

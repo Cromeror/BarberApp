@@ -37,7 +37,7 @@ export class BarberServicesComponent {
       });
   }
 
-  get bValue(): number[] {
+  get selectedValues(): number[] {
     return this.form.value.services
       .filter((value) => value.selected)
       .map((value) => value.id);

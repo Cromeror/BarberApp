@@ -6,8 +6,9 @@
     nzSpan="2"></div>
   <nz-col nzSpan="22">
     <nz-row nzJustify="space-between" nzAlign="middle" class="item-position--gutter">
-      <span nz-col nzSpan="18">Falcao García</span>
-      <span nz-col nzSpan="4" class="item-position__number-position" style="text-align: right;">01</span>
+      <span nz-col nzSpan="18">{{user?.name || user?.nickname || 'Sin nombre'}} {{user?.last_name}}</span>
+      <span nz-col nzSpan="4" class="item-position__number-position"
+            style="text-align: right;">{{position || -1 | number:'2.0'}}</span>
     </nz-row>
   </nz-col>
 </nz-row>

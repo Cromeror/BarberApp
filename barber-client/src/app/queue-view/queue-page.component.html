@@ -3,10 +3,10 @@
     <img src="assets/yanior-barber-logo.png" style="height: 42px;"/>
     <img src="assets/yanior-barber.png" style="height: 24px;"/>
   </nz-row>
-  <nz-row class="queue-view--default-padding">
-    <div nz-col nzSpan="16">
-      <div style="height: 100%;">Video</div>
-      <div>
+  <nz-row class="queue-view__content queue-view--default-padding">
+    <div nz-col nzSpan="16" style="height: 100%;">
+      <div class="queue-view__video">Video</div>
+      <div class="queue-view__in-hold">
         <nz-row nzGutter="24">
           <nz-col nzSpan="12">
             <nz-row nzJustify="space-between" nzAlign="bottom">
@@ -28,15 +28,13 @@
         </nz-row>
       </div>
     </div>
-    <div nz-col nzSpan="8">
+    <div nz-col nzSpan="8" style="height: 100%; overflow: auto;">
       <nz-row>
         <nz-col nzSpan="24">
           <span class="queue-view--title">Fila</span>
           <nz-divider></nz-divider>
-          <app-item-position></app-item-position>
-          <app-item-position></app-item-position>
-          <app-item-position></app-item-position>
-          <app-item-position></app-item-position>
+          <app-item-position *ngFor="let ticket of tickets?.data" [position]="ticket.position"
+                             [user]="ticket?.user"></app-item-position>
         </nz-col>
       </nz-row>
     </div>

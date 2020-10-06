@@ -1,10 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
 import {BarberServicesComponent} from '../../barber-services/barber-services.component';
-import {Tickets, TicketsService} from '../../api/tickets.service';
+import {Ticket, TicketsService} from '../../api/tickets.service';
 import {TicketServiceService} from '../../api/ticket-service.service';
-import {tap} from 'rxjs/operators';
 import {PaginateUser, User, UserService} from '../../api/user.service';
-import {LoginType} from '../../client-login-method/client-login-method.component';
+import {ClientLoginMethodComponent, LoginType} from '../../client-login-method/client-login-method.component';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-ticket-selector',
@@ -13,27 +13,43 @@ import {LoginType} from '../../client-login-method/client-login-method.component
 })
 export class TicketSelectorComponent {
   @ViewChild('barberService') barberServiceItem: BarberServicesComponent;
-  step = 0;
+  @ViewChild(ClientLoginMethodComponent) clientLoginMethodComp: ClientLoginMethodComponent;
+
+  step = 1;
   users: PaginateUser;
   client: User;
   title: string;
+  loginMethod: string;
+  loginValue: string;
+  ticketCreated: Ticket;
 
   constructor(private ticketsService: TicketsService,
               private ticketServiceService: TicketServiceService,
-              private userService: UserService) {
+              private userService: UserService,
+              private activatedRoute: ActivatedRoute) {
+    const {step} = this.activatedRoute.snapshot.queryParams;
+    if (step === '1') {
+      const {method, value} = this.activatedRoute.snapshot.queryParams;
+      this.loginMethod = method;
+      this.loginValue = value;
+      this.step = Math.trunc(step) || this.step;
+    }
   }
 
   createTicket(): void {
-    this.ticketsService.create({userId: this.client.id, position: 1, active: true})
-      .pipe(tap(
-        (resTicket: Tickets) => {
-          this.barberServiceItem.bValue.forEach((serviceId: number) => {
-            this.ticketServiceService.create({serviceId, ticketId: resTicket.id}).subscribe(console.log);
-          });
-        }
-      ))
-      .subscribe(() => {
-        this.step = 2;
+    const servicesDataRequest = this.barberServiceItem.selectedValues
+      .map((serviceId: number) => ({serviceId}));
+
+    this.ticketsService
+      .create({
+        userId: this.client.id,
+        active: true,
+        ticket_services: servicesDataRequest
+      })
+      .subscribe((ticket: Ticket) => {
+        this.ticketCreated = ticket;
+        this.title = '';
+        this.step = 3;
       });
   }
 
@@ -60,7 +76,7 @@ export class TicketSelectorComponent {
       .subscribe((paginateUser: PaginateUser) => {
         this.users = paginateUser;
         this.title = 'Seleccione su usuario de la lista';
-        this.step = 3;
+        this.step = 4;
       });
   }
 
@@ -68,6 +84,6 @@ export class TicketSelectorComponent {
     this.client = event;
     this.barberServiceItem.refreshServices(event.grown_state, event.gender);
     this.title = 'Seleccione el servicio que desea';
-    this.step = 1;
+    this.step = 2;
   }
 }

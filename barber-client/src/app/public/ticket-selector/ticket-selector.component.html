@@ -1,15 +1,15 @@
 <nz-row nzJustify="center" nzAlign="middle" style="height: 100%;">
   <nz-card nz-col nzSpan="10" nzTitle="{{title}}">
-    <div *ngIf="step === 0">
+    <div [hidden]="step !== 1">
       <ng-container *ngTemplateOutlet="clientIdentifier"></ng-container>
     </div>
-    <div [hidden]="step !== 1">
+    <div [hidden]="step !== 2">
       <ng-container *ngTemplateOutlet="serviceSelector"></ng-container>
     </div>
-    <div *ngIf="step === 2">
+    <div *ngIf="step === 3">
       <ng-container *ngTemplateOutlet="finishSelection"></ng-container>
     </div>
-    <div *ngIf="step === 3">
+    <div *ngIf="step === 4">
       <ng-container *ngTemplateOutlet="selectMyUser"></ng-container>
     </div>
   </nz-card>
@@ -17,13 +17,13 @@
 
 <ng-template #clientIdentifier>
   <nz-row nzJustify="center" nzAlign="middle">
-    <app-client-login-method nz-col nzSpan="20" (submitEvent)="searchClient($event)"></app-client-login-method>
-
+    <app-client-login-method nz-col nzSpan="20" [method]="loginMethod" [value]="loginValue"
+                             (submitEvent)="searchClient($event)"></app-client-login-method>
     <nz-divider></nz-divider>
 
     <nz-space>
       <nz-space-item>
-        <span (click)="step = 1;">No tienes cuenta en Yanior Barber?</span>
+        <span (click)="step = 2;">No tienes cuenta en Yanior Barber?</span>
       </nz-space-item>
       <nz-space-item>
         <a routerLink="/public/register" [queryParams]="{back: '/public/ticket'}">
@@ -44,7 +44,7 @@
 <ng-template #finishSelection>
   <nz-row nzJustify="center" nzAlign="middle">
     <h1 style="width: 100%; text-align: center;">Su turno es</h1>
-    <div style="font-size: 3rem;">01</div>
+    <div style="font-size: 3rem;">{{ticketCreated?.position | number: '2.0'}}</div>
     <nz-divider></nz-divider>
     <div>
       <span>Hora de atención aproximada </span>

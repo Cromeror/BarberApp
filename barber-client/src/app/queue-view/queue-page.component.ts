@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {RealtimeApiService} from '../api/realtime-api.service';
+import {PaginateTicket, Ticket} from '../api/tickets.service';
 
 @Component({
   selector: 'app-welcome',
@@ -7,6 +8,8 @@ import {RealtimeApiService} from '../api/realtime-api.service';
   styleUrls: ['./queue-page.component.scss']
 })
 export class QueuePageComponent {
+  tickets: PaginateTicket;
+
   constructor(private realtimeApiService: RealtimeApiService) {
     this.realtimeApiService.authenticate({
       strategy: 'local',
@@ -15,7 +18,9 @@ export class QueuePageComponent {
     })
       .then(() => {
         this.realtimeApiService.onMonitor(10)
-          .subscribe(console.log);
+          .subscribe((tickets: PaginateTicket) => {
+            this.tickets = tickets;
+          });
       })
       .catch(err => {
         console.log('Wrong credentials!');

@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {Pagination} from './utils/pagination';
+import {User} from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,18 +22,50 @@ export class TicketsService {
     });
   }
 
-  create(tickets: Tickets): Observable<Tickets> {
-    return this.http.post<Tickets>('api/tickets', tickets);
+  create(tickets: Ticket): Observable<Ticket> {
+    return this.http.post<Ticket>('api/tickets', tickets);
   }
 }
 
-export interface Tickets {
+export interface Ticket {
   id?: number;
-  position: number;
+  position?: number;
   userId: number;
   active: boolean;
   // tslint:disable-next-line:variable-name
   finish_date?: string;
   // tslint:disable-next-line:variable-name
   start_date?: string;
+  ticket_services?: Array<{
+    serviceId: number;
+  }>;
+}
+
+export interface TicketResponse {
+  id?: number;
+  position?: number;
+  userId: number;
+  active: boolean;
+  // tslint:disable-next-line:variable-name
+  finish_date?: string;
+  // tslint:disable-next-line:variable-name
+  start_date?: string;
+  user: User;
+  ticket_services?: Array<{
+    id: number;
+    service: {
+      id: number;
+      name: string;
+      price: number;
+      gender: string;
+      grown_state: string;
+    };
+  }>;
+}
+
+export class PaginateTicket implements Pagination {
+  limit: number;
+  skip: number;
+  total: number;
+  data: TicketResponse[];
 }

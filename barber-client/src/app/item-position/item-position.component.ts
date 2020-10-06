@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {User} from '../api/user.service';
 
 @Component({
   selector: 'app-item-position',
@@ -6,6 +7,6 @@ import {Component} from '@angular/core';
   styleUrls: ['./item-position.component.scss']
 })
 export class ItemPositionComponent {
-  constructor() {
-  }
+  @Input() position: number;
+  @Input() user: User;
 }

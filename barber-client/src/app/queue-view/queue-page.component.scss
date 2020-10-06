@@ -5,6 +5,19 @@
   background: linear-gradient(160deg, rgba(105, 109, 112, 1) 22%, rgba(33, 36, 41, 1) 100%);
   color: #ffffff;
 
+  &__content {
+    height: 90vh;
+    position: relative;
+  }
+
+  &__video {
+    height: calc(100% - 140px);
+  }
+
+  &__in-hold {
+    height: 140px;
+  }
+
   &__item {
     &-image {
       width: 30px;
