@@ -1,13 +1,20 @@
 import {HookContext} from '@feathersjs/feathers';
+import {Op} from 'sequelize';
 
 export default {
   before: {
     all: [],
     find: [
       async (context: HookContext) => {
+        let query: any = context.params.query;
+        const {active} = query;
+        const activeParam = active ? active.toString()?.toLowerCase() : active;
+        if (/(false)|(true)/g.test(activeParam)) {
+          query.active = activeParam === 'true' ? '1' : '0';
+        }
+
         const models = context.app.get('sequelizeClient').models;
         context.params.sequelize = {
-          where: {active: true},
           include: [
             {model: models.users, attributes: ['id', 'name', 'last_name', 'age', 'gender', 'grown_state', 'nickname']},
             {
@@ -23,8 +30,15 @@ export default {
     create: [
       async (context: HookContext) => {
         const models = context.app.get('sequelizeClient').models;
-        await models.tickets.count({where: {active: true}})
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth().toString().padStart(2, "0");
+        const day = today.getDay().toString().padStart(2, "0");
+        const todayStr = `${year}-${month}-${day} 00:00:00`;
+
+        await models.tickets.count({where: {createdAt: {[Op.gte]: todayStr}}})
           .then((count: number) => {
+            console.log('Count', count);
             context.data = {...context.data, position: count + 1}
           });
 

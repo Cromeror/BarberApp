@@ -7,7 +7,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 })
 export class ClientLoginMethodComponent implements OnChanges {
   @Output() submitEvent = new EventEmitter<{ value: string, type: LoginType }>();
-  @Input() method: LoginType;
+  @Input() method: LoginType | string;
   @Input() value = '';
 
   loginType: LoginType;

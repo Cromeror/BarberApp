@@ -49,7 +49,7 @@
   </div>
   <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
     <input type="text" nz-input placeholder="Ingrese su número de teléfono"
-           [defaultValue]="value" (change)="currentValue = $event.target.value;"/>
+           [defaultValue]="value ? value : ''" (change)="currentValue = $event.target.value;"/>
   </nz-input-group>
 </ng-template>
 

@@ -25,6 +25,27 @@ export class TicketsService {
   create(tickets: Ticket): Observable<Ticket> {
     return this.http.post<Ticket>('api/tickets', tickets);
   }
+
+  update(ticket: PartialTicket, id: number): Observable<Ticket> {
+    return this.http.patch<Ticket>('api/tickets/' + id, ticket);
+  }
+
+  all(params?: TicketParam): Observable<PaginateTicket> {
+    return this.http.get<PaginateTicket>('api/tickets', {params: {...params}});
+  }
+}
+
+export interface TicketParam {
+  active?: any;
+}
+
+export interface PartialTicket {
+  position?: number;
+  active: boolean;
+  // tslint:disable-next-line:variable-name
+  finish_date?: string;
+  // tslint:disable-next-line:variable-name
+  start_date?: string;
 }
 
 export interface Ticket {

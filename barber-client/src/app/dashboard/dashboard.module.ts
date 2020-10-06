@@ -14,6 +14,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {ServiceManagementComponent} from './service-management/service-management.component';
 import {DialogFormServiceModule} from '../dialog-form-service/dialog-form-service.module';
 import {ServicesService} from '../api/services.service';
+import {TicketManagementComponent} from './ticket-management/ticket-management.component';
+import {TicketsService} from '../api/tickets.service';
 
 const routes: Routes = [
   {
@@ -24,13 +26,19 @@ const routes: Routes = [
         children: [
           {path: 'service', component: ServiceManagementComponent},
         ]
+      },
+      {
+        path: 'management',
+        children: [
+          {path: 'tickets', component: TicketManagementComponent},
+        ]
       }
     ]
   }
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, ServiceManagementComponent],
+  declarations: [DashboardComponent, ServiceManagementComponent, TicketManagementComponent],
   imports: [
     CommonModule,
     NzLayoutModule,
@@ -43,7 +51,7 @@ const routes: Routes = [
     NzButtonModule,
     DialogFormServiceModule
   ],
-  providers: [ServicesService]
+  providers: [ServicesService, TicketsService]
 })
 export class DashboardModule {
 }

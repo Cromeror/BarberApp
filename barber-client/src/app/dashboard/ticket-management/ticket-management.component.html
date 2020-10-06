@@ -1,0 +1,22 @@
+<nz-table>
+  <thead>
+  <tr>
+    <th>Posición</th>
+    <th>Cliente</th>
+    <th>Servicios</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of tickets?.data">
+    <td>{{ data.position }}</td>
+    <td>{{ data.user.name }}</td>
+    <td>Servicios.....</td>
+    <td nz-row nzJustify="end">
+      <a (click)="updateTicket(data.id, {active: false})">atendido</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a>Cancelar turno</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
