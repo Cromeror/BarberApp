@@ -12,7 +12,6 @@ export class QueuePageComponent {
 
   constructor(private realtimeApiService: RealtimeApiService) {
     realtimeApiService.tickets$.subscribe((tickets: PaginateTicket) => {
-      console.log(tickets);
       this.tickets = tickets;
     });
   }

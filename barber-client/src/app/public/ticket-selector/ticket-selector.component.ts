@@ -5,6 +5,8 @@ import {TicketServiceService} from '../../api/ticket-service.service';
 import {PaginateUser, User, UserService} from '../../api/user.service';
 import {ClientLoginMethodComponent, LoginType} from '../../client-login-method/client-login-method.component';
 import {ActivatedRoute} from '@angular/router';
+import {timer} from 'rxjs';
+import {finalize, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-ticket-selector',
@@ -22,6 +24,10 @@ export class TicketSelectorComponent {
   loginMethod: string;
   loginValue: string;
   ticketCreated: Ticket;
+
+  resetTimerPercent = 0;
+  resetTime = 3000;
+  remainingTime = 3000;
 
   constructor(private ticketsService: TicketsService,
               private ticketServiceService: TicketServiceService,
@@ -50,6 +56,16 @@ export class TicketSelectorComponent {
         this.ticketCreated = ticket;
         this.title = '';
         this.step = 3;
+        // Reiniciado la selección de tiquetes
+        timer(0, 1)
+          .pipe(take(this.resetTime), finalize(() => {
+            this.step = 1;
+            this.loginMethod = LoginType.FINGERPRINT;
+          }))
+          .subscribe((time: number) => {
+            this.resetTimerPercent = Math.ceil((time * 100) / this.resetTime);
+            this.remainingTime = this.resetTime - time;
+          });
       });
   }
 
@@ -85,5 +101,10 @@ export class TicketSelectorComponent {
     this.barberServiceItem.refreshServices(event.grown_state, event.gender);
     this.title = 'Seleccione el servicio que desea';
     this.step = 2;
+  }
+
+  timerFormat(): string {
+    return Math.floor(this.remainingTime / 1000).toString().padStart(2, '0') + ':'
+      + Math.round(this.remainingTime / 100).toString().padStart(2, '0');
   }
 }

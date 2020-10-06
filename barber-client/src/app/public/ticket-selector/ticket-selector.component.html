@@ -36,7 +36,8 @@
 
 <ng-template #serviceSelector>
   <app-barber-services #barberService></app-barber-services>
-  <button nz-button nzType="primary" style="width: 100%;" (click)="createTicket();">
+  <button nz-button nzType="primary" style="width: 100%;" (click)="createTicket();"
+          [disabled]="barberServiceItem?.selectedValues.length <= 0">
     Finalizar
   </button>
 </ng-template>
@@ -49,6 +50,10 @@
     <div>
       <span>Hora de atención aproximada </span>
       <strong>09:00 AM</strong>
+    </div>
+    <div style="position: absolute; bottom: 12px; right: 24px;">
+      <nz-progress [nzPercent]="resetTimerPercent" [nzFormat]="timerFormat.bind(this)" nzType="circle" nzWidth="40"
+                   [nzStrokeColor]="{ '0%': '#000000a6', '100%': '#87d068' }"></nz-progress>
     </div>
   </nz-row>
 </ng-template>
