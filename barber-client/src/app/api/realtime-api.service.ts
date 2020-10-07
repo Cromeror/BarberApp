@@ -5,7 +5,7 @@ import * as io from 'socket.io-client';
 import feathers from '@feathersjs/feathers';
 import feathersSocketIOClient from '@feathersjs/socketio-client';
 import {Observable, ReplaySubject} from 'rxjs';
-import {PaginateTicket, Ticket, TicketResponse} from './tickets.service';
+import {PaginateTicket, Status, Ticket, TicketResponse} from './tickets.service';
 import {take, tap} from 'rxjs/operators';
 
 @Injectable({
@@ -70,17 +70,13 @@ export class RealtimeApiService {
         this.tickets$
           .pipe(take(1))
           .subscribe((tickets: PaginateTicket) => {
-            if (data.active) {
-              tickets.data.map((ticket: TicketResponse) => {
-                if (ticket.id === data.id) {
-                  return {...ticket, ...data};
-                }
-                return ticket;
-              });
-            } else {
-              tickets.data = tickets.data.filter((ticket: TicketResponse) => ticket.id !== data.id);
-            }
-            this.ticketsSubject.next(tickets);
+            const updatedTicketData = tickets.data.map((ticket: TicketResponse) => {
+              if (ticket.id === data.id) {
+                return {...ticket, ...data};
+              }
+              return ticket;
+            });
+            this.ticketsSubject.next({...tickets, data: updatedTicketData.filter((ticket: any) => ticket.active)});
           });
       });
   }

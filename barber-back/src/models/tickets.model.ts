@@ -22,6 +22,10 @@ export default function (app: Application): typeof Model {
     active: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: 'in_queue'
     }
   }, {
     hooks: {

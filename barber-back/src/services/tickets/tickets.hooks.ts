@@ -38,7 +38,6 @@ export default {
 
         await models.tickets.count({where: {createdAt: {[Op.gte]: todayStr}}})
           .then((count: number) => {
-            console.log('Count', count);
             context.data = {...context.data, position: count + 1}
           });
 

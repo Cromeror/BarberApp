@@ -41,11 +41,12 @@ export interface TicketParam {
 
 export interface PartialTicket {
   position?: number;
-  active: boolean;
+  active?: boolean;
   // tslint:disable-next-line:variable-name
   finish_date?: string;
   // tslint:disable-next-line:variable-name
   start_date?: string;
+  status?: Status | string;
 }
 
 export interface Ticket {
@@ -57,6 +58,7 @@ export interface Ticket {
   finish_date?: string;
   // tslint:disable-next-line:variable-name
   start_date?: string;
+  status?: Status | string;
   ticket_services?: Array<{
     serviceId: number;
   }>;
@@ -67,6 +69,7 @@ export interface TicketResponse {
   position?: number;
   userId: number;
   active: boolean;
+  status?: Status | string;
   // tslint:disable-next-line:variable-name
   finish_date?: string;
   // tslint:disable-next-line:variable-name
@@ -89,4 +92,11 @@ export class PaginateTicket implements Pagination {
   skip: number;
   total: number;
   data: TicketResponse[];
+}
+
+export enum Status {
+  IN_QUEUE = 'in_queue',
+  IN_SERVICE = 'in_service',
+  SERVED = 'served',
+  CANCELED = 'canceled'
 }

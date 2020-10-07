@@ -12,10 +12,16 @@
     <td>{{ data.position }}</td>
     <td>{{ data.user.name }}</td>
     <td>Servicios.....</td>
+
     <td nz-row nzJustify="end">
-      <a (click)="updateTicket(data.id, {active: false})">atendido</a>
+      <a *ngIf="data.status === 'in_queue'" (click)="updateTicket(data.id, {status: 'in_service'})">
+        atender
+      </a>
+      <a *ngIf="data.status === 'in_service'" (click)="updateTicket(data.id, {status: 'served', active: false})">
+        finalizar servicio
+      </a>
       <nz-divider nzType="vertical"></nz-divider>
-      <a>Cancelar turno</a>
+      <a (click)="updateTicket(data.id, {status: 'canceled', active: false})">Cancelar turno</a>
     </td>
   </tr>
   </tbody>
