@@ -18,3 +18,14 @@ export interface TicketServices {
   serviceId: number;
   ticketId: number;
 }
+
+export interface TicketServicesResponse {
+  id: number;
+  service: {
+    id: number;
+    name: string;
+    price: number;
+    gender: string;
+    grown_state: string;
+  };
+}

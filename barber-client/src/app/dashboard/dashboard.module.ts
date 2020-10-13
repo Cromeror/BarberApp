@@ -6,7 +6,7 @@ import {
   NzDividerModule,
   NzGridModule,
   NzIconModule,
-  NzLayoutModule,
+  NzLayoutModule, NzListModule,
   NzMenuModule,
   NzTableModule
 } from 'ng-zorro-antd';
@@ -16,6 +16,10 @@ import {DialogFormServiceModule} from '../dialog-form-service/dialog-form-servic
 import {ServicesService} from '../api/services.service';
 import {TicketManagementComponent} from './ticket-management/ticket-management.component';
 import {TicketsService} from '../api/tickets.service';
+import {ClientManagementComponent} from './client-management/client-management.component';
+import {UserService} from '../api/user.service';
+import {DialogEndingServiceModule} from '../dialog-ending-service/dialog-ending-service.module';
+import {DialogFormClientModule} from '../dialog-form-client/dialog-form-client.module';
 
 const routes: Routes = [
   {
@@ -31,6 +35,7 @@ const routes: Routes = [
         path: 'management',
         children: [
           {path: 'tickets', component: TicketManagementComponent},
+          {path: 'clients', component: ClientManagementComponent},
         ]
       }
     ]
@@ -38,20 +43,23 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, ServiceManagementComponent, TicketManagementComponent],
-  imports: [
-    CommonModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzIconModule,
-    RouterModule.forChild(routes),
-    NzTableModule,
-    NzDividerModule,
-    NzGridModule,
-    NzButtonModule,
-    DialogFormServiceModule
-  ],
-  providers: [ServicesService, TicketsService]
+  declarations: [DashboardComponent, ServiceManagementComponent, TicketManagementComponent, ClientManagementComponent],
+    imports: [
+        CommonModule,
+        NzLayoutModule,
+        NzMenuModule,
+        NzIconModule,
+        RouterModule.forChild(routes),
+        NzTableModule,
+        NzDividerModule,
+        NzGridModule,
+        NzButtonModule,
+        DialogFormServiceModule,
+        NzListModule,
+        DialogEndingServiceModule,
+        DialogFormClientModule
+    ],
+  providers: [ServicesService, TicketsService, UserService]
 })
 export class DashboardModule {
 }

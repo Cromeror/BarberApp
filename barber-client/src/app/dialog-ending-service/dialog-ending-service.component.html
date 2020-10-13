@@ -1,0 +1,41 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="{{title}}" (nzOnCancel)="close()" (nzOnOk)="isVisible = false">
+  <div>
+    Resumen
+  </div>
+
+  <nz-table #basicTable [nzShowPagination]="false" [nzData]="services">
+    <thead>
+    <tr>
+      <th>Servicio</th>
+      <th>Valor</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ticketService of services">
+      <td>{{ticketService?.service?.name}}</td>
+      <td>{{ticketService?.service?.price}}</td>
+      <td>
+        <div style="display: flex; justify-content: flex-end;">
+          <i nz-icon nzType="close" nzTheme="outline"></i>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+  <div class="total-payment">
+    Valor a pagar: <strong style="font-size: 2em; padding-left: 12px;">
+    {{calcTotalPayment() | currency: '$': 'symbol':'3.0-0'}}
+  </strong>
+  </div>
+
+  <nz-row>
+    <nz-col nzSpan="20" nzOffset="2">
+    </nz-col>
+  </nz-row>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="close()">Cancelar</button>
+    <button nz-button nzType="primary" (click)="handleOk()">Cobrar</button>
+  </div>
+</nz-modal>

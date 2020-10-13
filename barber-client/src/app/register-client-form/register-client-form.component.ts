@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {UserService} from '../api/user.service';
+import {User, UserService} from '../api/user.service';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {GrownStateService} from '../utils/grown-state.service';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {GenderService} from '../utils/gender.service';
 
 @Component({
@@ -13,8 +13,11 @@ import {GenderService} from '../utils/gender.service';
   providers: [UserService]
 })
 export class RegisterClientFormComponent {
+  @Input() hideSubmit: boolean;
+  @Input() hideDataPolicy = false;
   @ViewChild('template') template: TemplateRef<any>;
   @Output() successEvent = new EventEmitter();
+  @Output() isValid = new EventEmitter<{ valid: boolean; data: User }>();
 
   form!: FormGroup;
 
@@ -29,6 +32,11 @@ export class RegisterClientFormComponent {
         const grownState = this.grownStateService.classifyGrownState(age);
         this.form.patchValue({grown_state: grownState});
       });
+    this.form.valueChanges
+      .pipe(
+        map(() => this.form.valid),
+        distinctUntilChanged())
+      .subscribe((valid) => this.isValid.emit({valid, data: this.form.value}));
   }
 
   registerUser() {

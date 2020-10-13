@@ -17,7 +17,7 @@
       <a *ngIf="data.status === 'in_queue'" (click)="updateTicket(data.id, {status: 'in_service'})">
         atender
       </a>
-      <a *ngIf="data.status === 'in_service'" (click)="updateTicket(data.id, {status: 'served', active: false})">
+      <a *ngIf="data.status === 'in_service'" (click)="endingService(data.id, data)">
         finalizar servicio
       </a>
       <nz-divider nzType="vertical"></nz-divider>
@@ -26,3 +26,8 @@
   </tr>
   </tbody>
 </nz-table>
+
+<app-dialog-ending-service [isVisible]="showEndingDialog" title="Finalizar servicio"
+                           (okEvent)="okEndingDialog($event)"
+                           (closedEvent)="closeEndingDialog()"
+                           [services]="currentTicket?.ticket_services"></app-dialog-ending-service>

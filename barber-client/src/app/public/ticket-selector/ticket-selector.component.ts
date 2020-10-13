@@ -79,10 +79,10 @@ export class TicketSelectorComponent {
       case LoginType.FINGERPRINT:
         break;
       case LoginType.PHONE:
-        this.fetchClients({phone: event.value});
+        this.fetchClients({phone: event.value, type: 'client'});
         break;
       case LoginType.EMAIl:
-        this.fetchClients({email: event.value});
+        this.fetchClients({email: event.value, type: 'client'});
         break;
     }
   }

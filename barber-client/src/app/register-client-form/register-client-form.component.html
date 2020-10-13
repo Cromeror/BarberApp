@@ -71,7 +71,7 @@
       <input nz-input id="nickname" formControlName="nickname"/>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item nz-row class="register-area">
+  <nz-form-item nz-row class="register-area" *ngIf="!hideDataPolicy">
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
       <label nz-checkbox formControlName="agree">
         <span>Estoy de acuerdo con las <a>políticas de tratamiento de datos</a></span>
@@ -80,7 +80,9 @@
   </nz-form-item>
   <nz-form-item nz-row nzJustify="center">
     <div nz-col nzSpan="20" style="display: flex; justify-content: flex-end;">
-      <button nz-button nzType="primary" type="submit" [disabled]="form.invalid">Registrarse</button>
+      <button nz-button nzType="primary" type="submit" [hidden]="hideSubmit" [disabled]="form.invalid">
+        Registrarse
+      </button>
     </div>
   </nz-form-item>
 </form>

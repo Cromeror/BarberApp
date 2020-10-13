@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Pagination} from './utils/pagination';
 import {User} from './user.service';
+import {TicketServicesResponse} from './ticket-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -75,16 +76,7 @@ export interface TicketResponse {
   // tslint:disable-next-line:variable-name
   start_date?: string;
   user: User;
-  ticket_services?: Array<{
-    id: number;
-    service: {
-      id: number;
-      name: string;
-      price: number;
-      gender: string;
-      grown_state: string;
-    };
-  }>;
+  ticket_services?: Array<TicketServicesResponse>;
 }
 
 export class PaginateTicket implements Pagination {

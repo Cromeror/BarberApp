@@ -48,6 +48,11 @@ export default function (app: Application): typeof Model {
       type: DataTypes.STRING,
       allowNull: true
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'client'
+    },
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {

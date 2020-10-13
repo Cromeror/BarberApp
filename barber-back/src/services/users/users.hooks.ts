@@ -21,8 +21,8 @@ export default {
         return context;
       },
       hashPassword('password')],
-    update: [hashPassword('password'), authenticate('jwt')],
-    patch: [hashPassword('password'), authenticate('jwt')],
+    update: [hashPassword('password')/*, authenticate('jwt')*/],
+    patch: [hashPassword('password')/*, authenticate('jwt')*/],
     remove: [authenticate('jwt')]
   },
 

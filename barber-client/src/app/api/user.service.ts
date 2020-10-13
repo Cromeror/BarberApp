@@ -39,6 +39,7 @@ interface UserParams {
   email?: string;
   phone?: string;
   age?: string;
+  type?: string;
 }
 
 export interface User {
@@ -50,6 +51,7 @@ export interface User {
   age: number;
   gender: 'man' | 'woman';
   grown_state: 'kids' | 'teen' | 'adult';
+  type: 'client' | 'admin';
   email?: string;
   password?: string;
   nickname?: string;
