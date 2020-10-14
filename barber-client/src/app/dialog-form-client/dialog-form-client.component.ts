@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {GenericDialog} from '../utils/generic-dialog';
 import {User, UserService} from '../api/user.service';
 
@@ -8,6 +8,7 @@ import {User, UserService} from '../api/user.service';
   styleUrls: ['./dialog-form-client.component.scss']
 })
 export class DialogFormClientComponent extends GenericDialog {
+  @Input() client: User;
   isValid: boolean;
   currentData: User;
 
@@ -16,12 +17,16 @@ export class DialogFormClientComponent extends GenericDialog {
   }
 
   handleOk(): void {
-    this.userService.create(this.currentData).subscribe();
+    if (this.client?.id) {
+      this.userService.update(this.currentData, this.client.id)
+        .subscribe((response) => this.okEvent.emit(response));
+    } else {
+      this.userService.create(this.currentData).subscribe();
+    }
     super.handleOk();
   }
 
-  formIsValid(event: any) {
-    this.isValid = event.valid;
-    this.currentData = event.data;
+  formIsValid(event: boolean) {
+    this.isValid = event;
   }
 }

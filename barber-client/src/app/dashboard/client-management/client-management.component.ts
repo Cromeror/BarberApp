@@ -1,22 +1,26 @@
-import {Component, OnInit} from '@angular/core';
-import {PaginateUser, UserService} from '../../api/user.service';
+import {Component} from '@angular/core';
+import {PaginateUser, User, UserService} from '../../api/user.service';
 
 @Component({
   selector: 'app-client-management',
   templateUrl: './client-management.component.html',
   styleUrls: ['./client-management.component.scss']
 })
-export class ClientManagementComponent implements OnInit {
+export class ClientManagementComponent {
   clients: PaginateUser;
+  currentClient: User;
   showDialog = false;
+  deleteMsg = '¿Estas seguro que desea eliminar este cliente?';
 
   constructor(private userService: UserService) {
-    this.userService.all({type: 'client'}).subscribe((clients) => {
-      this.clients = clients;
-    });
+    this.fetch();
   }
 
-  ngOnInit(): void {
+  fetch(): void {
+    this.userService.all({type: 'client'})
+      .subscribe((clients) => {
+        this.clients = clients;
+      });
   }
 
   openDialogToEnding(): void {
@@ -24,6 +28,15 @@ export class ClientManagementComponent implements OnInit {
   }
 
   closeFormDialog(): void {
+    this.currentClient = null;
     this.showDialog = false;
+  }
+
+  edit(client: User): void {
+    this.currentClient = client;
+    this.openDialogToEnding();
+  }
+
+  delete(client: User): void {
   }
 }

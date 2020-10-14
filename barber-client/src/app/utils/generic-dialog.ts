@@ -4,7 +4,7 @@ export class GenericDialog {
   @Input() isVisible = false;
   @Input() title = '';
   @Output() closedEvent = new EventEmitter<boolean>();
-  @Output() okEvent = new EventEmitter<number>();
+  @Output() okEvent = new EventEmitter<any>();
 
   close(): void {
     this.closedEvent.emit(this.isVisible);

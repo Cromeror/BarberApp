@@ -6,23 +6,24 @@ import {HookContext} from '@feathersjs/feathers';
 const {authenticate} = feathersAuthentication.hooks;
 const {hashPassword, protect} = local.hooks;
 
+async function cleanData(context: HookContext) {
+  console.log(context.data);
+  for (const key in context.data) {
+    if (!context.data[key]) {
+      delete context.data[key];
+    }
+  }
+  return context;
+}
+
 export default {
   before: {
     all: [],
     find: [/*authenticate('jwt')*/],
     get: [authenticate('jwt')],
-    create: [
-      async (context: HookContext) => {
-        for (const key in context.data) {
-          if (!context.data[key]) {
-            delete context.data[key];
-          }
-        }
-        return context;
-      },
-      hashPassword('password')],
+    create: [cleanData, hashPassword('password')],
     update: [hashPassword('password')/*, authenticate('jwt')*/],
-    patch: [hashPassword('password')/*, authenticate('jwt')*/],
+    patch: [cleanData, hashPassword('password')/*, authenticate('jwt')*/],
     remove: [authenticate('jwt')]
   },
 

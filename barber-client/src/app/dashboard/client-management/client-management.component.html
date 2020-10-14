@@ -12,10 +12,19 @@
         <span>{{ client.name }} {{ client.last_name }}</span>
       </nz-list-item-meta-title>
     </nz-list-item-meta>
-
+    <ul nz-list-item-actions>
+      <nz-list-item-action><a (click)="edit(client)">editar</a></nz-list-item-action>
+      <nz-list-item-action>
+        <a nz-popconfirm [nzPopconfirmTitle]="deleteMsg" nzPopconfirmPlacement="bottom"
+           (nzOnConfirm)="delete(client)">
+          Delete
+        </a>
+      </nz-list-item-action>
+    </ul>
   </nz-list-item>
   <nz-list-empty *ngIf="clients?.data.length === 0"></nz-list-empty>
 </nz-list>
 
-<app-dialog-form-client [isVisible]="showDialog" title="Nuevo usuario" (closedEvent)="closeFormDialog()">
+<app-dialog-form-client [isVisible]="showDialog" title="Nuevo usuario" [client]="currentClient"
+                        (closedEvent)="closeFormDialog()" (okEvent)="fetch();">
 </app-dialog-form-client>

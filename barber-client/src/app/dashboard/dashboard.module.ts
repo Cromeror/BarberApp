@@ -2,13 +2,13 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DashboardComponent} from './dashboard.component';
 import {
-  NzButtonModule,
-  NzDividerModule,
-  NzGridModule,
-  NzIconModule,
-  NzLayoutModule, NzListModule,
-  NzMenuModule,
-  NzTableModule
+    NzButtonModule,
+    NzDividerModule,
+    NzGridModule,
+    NzIconModule,
+    NzLayoutModule, NzListModule,
+    NzMenuModule, NzPopconfirmModule,
+    NzTableModule
 } from 'ng-zorro-antd';
 import {RouterModule, Routes} from '@angular/router';
 import {ServiceManagementComponent} from './service-management/service-management.component';
@@ -57,7 +57,8 @@ const routes: Routes = [
         DialogFormServiceModule,
         NzListModule,
         DialogEndingServiceModule,
-        DialogFormClientModule
+        DialogFormClientModule,
+        NzPopconfirmModule
     ],
   providers: [ServicesService, TicketsService, UserService]
 })

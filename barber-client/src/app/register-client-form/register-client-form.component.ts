@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {User, UserService} from '../api/user.service';
 import {NzNotificationService} from 'ng-zorro-antd';
 import {GrownStateService} from '../utils/grown-state.service';
-import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map, tap} from 'rxjs/operators';
 import {GenderService} from '../utils/gender.service';
 
 @Component({
@@ -12,12 +12,14 @@ import {GenderService} from '../utils/gender.service';
   styleUrls: ['./register-client-form.component.scss'],
   providers: [UserService]
 })
-export class RegisterClientFormComponent {
+export class RegisterClientFormComponent implements OnChanges {
+  @Input() user: User;
   @Input() hideSubmit: boolean;
   @Input() hideDataPolicy = false;
   @ViewChild('template') template: TemplateRef<any>;
   @Output() successEvent = new EventEmitter();
-  @Output() isValid = new EventEmitter<{ valid: boolean; data: User }>();
+  @Output() isValid = new EventEmitter<boolean>();
+  @Output() changeData = new EventEmitter<User>();
 
   form!: FormGroup;
 
@@ -34,12 +36,22 @@ export class RegisterClientFormComponent {
       });
     this.form.valueChanges
       .pipe(
+        tap((data) => this.changeData.emit(data)),
         map(() => this.form.valid),
         distinctUntilChanged())
-      .subscribe((valid) => this.isValid.emit({valid, data: this.form.value}));
+      .subscribe((valid) => this.isValid.emit(valid));
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.user?.previousValue !== changes.user?.currentValue) {
+      this.form.reset({...changes.user.currentValue});
+    }
   }
 
   registerUser() {
+    if (this.hideSubmit) {
+      return;
+    }
     // tslint:disable-next-line:forin
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();

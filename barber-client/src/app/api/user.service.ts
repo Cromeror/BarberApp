@@ -30,6 +30,10 @@ export class UserService {
     return this.http.post<User>('api/users', user);
   }
 
+  update(user: PartialUser, id: number): Observable<User> {
+    return this.http.patch<User>('api/users/' + id, user);
+  }
+
   all(params?: UserParams): Observable<PaginateUser> {
     return this.http.get<PaginateUser>('api/users', {params: {...params}});
   }
@@ -62,4 +66,16 @@ export class PaginateUser implements Pagination {
   skip: number;
   total: number;
   data: User[];
+}
+
+export interface PartialUser {
+  name?: string;
+  // tslint:disable-next-line:variable-name
+  last_name?: string;
+  phone?: string;
+  age?: number;
+  gender?: 'man' | 'woman';
+  grown_state?: 'kids' | 'teen' | 'adult';
+  email?: string;
+  nickname?: string;
 }
