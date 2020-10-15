@@ -53,6 +53,11 @@ export default function (app: Application): typeof Model {
       allowNull: false,
       defaultValue: 'client'
     },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true
+    }
   }, {
     hooks: {
       beforeCount(options: any): HookReturn {

@@ -17,7 +17,7 @@ export class ClientManagementComponent {
   }
 
   fetch(): void {
-    this.userService.all({type: 'client'})
+    this.userService.all({type: 'client', active: true})
       .subscribe((clients) => {
         this.clients = clients;
       });
@@ -38,5 +38,7 @@ export class ClientManagementComponent {
   }
 
   delete(client: User): void {
+    this.userService.update({active: false}, client.id)
+      .subscribe(() => this.fetch());
   }
 }

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Pagination} from './utils/pagination';
+import {Ticket} from './tickets.service';
 
 @Injectable({
   providedIn: 'root'
@@ -61,11 +62,27 @@ export interface User {
   nickname?: string;
 }
 
+export interface ResponseUser {
+  id?: number;
+  name: string;
+  // tslint:disable-next-line:variable-name
+  last_name: string;
+  phone: string;
+  age: number;
+  gender: 'man' | 'woman';
+  grown_state: 'kids' | 'teen' | 'adult';
+  type: 'client' | 'admin';
+  email?: string;
+  password?: string;
+  nickname?: string;
+  tickets?: Ticket[];
+}
+
 export class PaginateUser implements Pagination {
   limit: number;
   skip: number;
   total: number;
-  data: User[];
+  data: ResponseUser[];
 }
 
 export interface PartialUser {
@@ -78,4 +95,5 @@ export interface PartialUser {
   grown_state?: 'kids' | 'teen' | 'adult';
   email?: string;
   nickname?: string;
+  active?: boolean;
 }

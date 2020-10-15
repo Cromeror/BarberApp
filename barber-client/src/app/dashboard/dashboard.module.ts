@@ -20,6 +20,7 @@ import {ClientManagementComponent} from './client-management/client-management.c
 import {UserService} from '../api/user.service';
 import {DialogEndingServiceModule} from '../dialog-ending-service/dialog-ending-service.module';
 import {DialogFormClientModule} from '../dialog-form-client/dialog-form-client.module';
+import { VisitsPipe } from './client-management/visits.pipe';
 
 const routes: Routes = [
   {
@@ -43,7 +44,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, ServiceManagementComponent, TicketManagementComponent, ClientManagementComponent],
+  declarations: [DashboardComponent, ServiceManagementComponent, TicketManagementComponent, ClientManagementComponent, VisitsPipe],
     imports: [
         CommonModule,
         NzLayoutModule,

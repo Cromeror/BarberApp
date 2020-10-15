@@ -12,12 +12,15 @@
         <span>{{ client.name }} {{ client.last_name }}</span>
       </nz-list-item-meta-title>
     </nz-list-item-meta>
+
+    {{client?.tickets.length | visits}}
+
     <ul nz-list-item-actions>
       <nz-list-item-action><a (click)="edit(client)">editar</a></nz-list-item-action>
       <nz-list-item-action>
         <a nz-popconfirm [nzPopconfirmTitle]="deleteMsg" nzPopconfirmPlacement="bottom"
            (nzOnConfirm)="delete(client)">
-          Delete
+          delete
         </a>
       </nz-list-item-action>
     </ul>
