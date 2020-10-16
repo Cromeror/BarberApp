@@ -3,6 +3,7 @@ import {PaginateTicket, PartialTicket, TicketResponse, TicketsService} from '../
 import {RealtimeApiService} from '../../api/realtime-api.service';
 import {MovementsService, Type} from '../../api/movements.service';
 import {tap} from 'rxjs/operators';
+import {UserService} from '../../api/user.service';
 
 @Component({
   selector: 'app-ticket-management',
@@ -12,10 +13,13 @@ import {tap} from 'rxjs/operators';
 export class TicketManagementComponent {
   tickets: PaginateTicket;
   showEndingDialog = false;
-  currentTicket: TicketResponse;
+  endingDialogConf: {
+    ticket: TicketResponse;
+    visits: number;
+  };
 
   constructor(private ticketService: TicketsService, private realtimeApiService: RealtimeApiService,
-              private movementsService: MovementsService) {
+              private movementsService: MovementsService, private userService: UserService) {
     this.realtimeApiService.tickets$
       .subscribe((tickets: PaginateTicket) => {
         this.tickets = tickets;
@@ -30,8 +34,14 @@ export class TicketManagementComponent {
   * Muestra el modal para terminar el servicio y realizar el cobro del dinero
   * */
   endingService(id: number, ticket: TicketResponse) {
-    this.showEndingDialog = true;
-    this.currentTicket = ticket;
+    this.userService.countTicketMonthly(ticket.user.id)
+      .subscribe((count: number) => {
+        this.showEndingDialog = true;
+        this.endingDialogConf = {
+          ticket,
+          visits: count
+        };
+      });
   }
 
   /*
@@ -40,7 +50,7 @@ export class TicketManagementComponent {
   okEndingDialog(totalValue: number): void {
     this.movementsService
       .create({type: Type.INCOMING, value: totalValue})
-      .pipe(tap(() => this.updateTicket(this.currentTicket.id, {status: 'served', active: false})))
+      .pipe(tap(() => this.updateTicket(this.endingDialogConf.ticket.id, {status: 'served', active: false})))
       .subscribe(() => {
         this.showEndingDialog = false;
       });

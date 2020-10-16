@@ -28,6 +28,8 @@
 </nz-table>
 
 <app-dialog-ending-service [isVisible]="showEndingDialog" title="Finalizar servicio"
+                           [client]="endingDialogConf?.ticket?.user"
+                           [visits]="endingDialogConf?.visits"
                            (okEvent)="okEndingDialog($event)"
                            (closedEvent)="closeEndingDialog()"
-                           [services]="currentTicket?.ticket_services"></app-dialog-ending-service>
+                           [services]="endingDialogConf?.ticket?.ticket_services"></app-dialog-ending-service>

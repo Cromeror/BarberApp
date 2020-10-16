@@ -1,9 +1,15 @@
 <nz-modal [(nzVisible)]="isVisible" nzTitle="{{title}}" (nzOnCancel)="close()" (nzOnOk)="isVisible = false">
-  <div>
-    Resumen
+
+  <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+    <div>
+      <nz-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+      {{client?.name}} {{client?.last_name}}
+    </div>
+    <button nz-button nzType="dashed" (click)="freeHaircut()" *ngIf="visits > 0">{{visits | visits}} | Corte gratis
+    </button>
   </div>
 
-  <nz-table #basicTable [nzShowPagination]="false" [nzData]="services">
+  <nz-table [nzShowPagination]="false" [nzData]="services">
     <thead>
     <tr>
       <th>Servicio</th>

@@ -1,21 +1,25 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {GenericDialog} from '../utils/generic-dialog';
 import {TicketServicesResponse} from '../api/ticket-service.service';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {User} from '../api/user.service';
 
 @Component({
   selector: 'app-dialog-ending-service',
   templateUrl: './dialog-ending-service.component.html',
   styleUrls: ['./dialog-ending-service.component.scss']
 })
-export class DialogEndingServiceComponent extends GenericDialog implements OnInit {
+export class DialogEndingServiceComponent extends GenericDialog {
   @Input() services: Array<TicketServicesResponse>;
+  @Input() client: User;
+  @Input() visits: number;
 
   constructor() {
     super();
   }
 
-  ngOnInit(): void {
+  freeHaircut(): void {
+    this.okEvent.emit(0);
   }
 
   handleOk(): void {

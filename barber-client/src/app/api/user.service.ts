@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Pagination} from './utils/pagination';
 import {Ticket} from './tickets.service';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,12 @@ export class UserService {
     return this.http.patch<User>('api/users/' + id, user);
   }
 
-  all(params?: UserParams): Observable<PaginateUser> {
+  all(params?: UserParams | any): Observable<PaginateUser> {
     return this.http.get<PaginateUser>('api/users', {params: {...params}});
+  }
+
+  countTicketMonthly(id: number): Observable<number> {
+    return this.http.get<string>('api/users/' + id + '/visits').pipe(map((count) => Number(count)));
   }
 }
 
@@ -45,6 +50,7 @@ interface UserParams {
   phone?: string;
   age?: string;
   type?: string;
+  active?: boolean;
 }
 
 export interface User {

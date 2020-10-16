@@ -2,14 +2,17 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DialogEndingServiceComponent} from './dialog-ending-service.component';
 import {
+  NzAvatarModule,
   NzButtonModule,
   NzFormModule,
   NzGridModule,
   NzIconModule,
   NzInputModule,
-  NzModalModule,
+  NzModalModule, NzPopconfirmModule,
   NzTableModule
 } from 'ng-zorro-antd';
+import {VisitsPipe} from '../dashboard/visits-pipe/visits.pipe';
+import {VisitsPipeModule} from '../dashboard/visits-pipe/visits-pipe.module';
 
 
 @NgModule({
@@ -25,7 +28,9 @@ import {
     NzFormModule,
     NzInputModule,
     NzTableModule,
-    NzIconModule
+    NzIconModule,
+    NzAvatarModule,
+    VisitsPipeModule
   ]
 })
 export class DialogEndingServiceModule {
