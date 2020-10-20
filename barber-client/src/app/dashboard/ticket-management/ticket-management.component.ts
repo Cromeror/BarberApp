@@ -51,16 +51,20 @@ export class TicketManagementComponent {
   * */
   okEndingDialog(totalValue: number): void {
     this.movementsService
-      .create({type: Type.INCOMING, value: totalValue, description: this.servicesToString()})
+      .create({
+        type: Type.INCOMING,
+        value: totalValue,
+        description: this.servicesToString(this.endingDialogConf.ticket.ticket_services)
+      })
       .pipe(tap(() => this.updateTicket(this.endingDialogConf.ticket.id, {status: 'served', active: false})))
       .subscribe(() => {
         this.showEndingDialog = false;
       });
   }
 
-  private servicesToString(): string {
-    if (isNotNullOrUndefined(this.endingDialogConf)) {
-      return this.endingDialogConf.ticket?.ticket_services
+  servicesToString(services: Array<TicketServicesResponse>): string {
+    if (isNotNullOrUndefined(services)) {
+      return services
         .map((service: TicketServicesResponse) => {
           return service.service?.name;
         }).toString();

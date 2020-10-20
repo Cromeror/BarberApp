@@ -11,7 +11,7 @@
   <tr *ngFor="let data of tickets?.data">
     <td>{{ data.position }}</td>
     <td>{{ data.user.name }}</td>
-    <td>Servicios.....</td>
+    <td>{{servicesToString(data.ticket_services)}}</td>
 
     <td nz-row nzJustify="end">
       <a *ngIf="data.status === 'in_queue'" (click)="updateTicket(data.id, {status: 'in_service'})">
