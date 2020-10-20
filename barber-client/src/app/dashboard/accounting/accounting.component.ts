@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {MovementParams, MovementsService, PaginateMovement} from '../../api/movements.service';
-import moment from 'moment';
+import moment, {MomentSetObject} from 'moment';
 import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 import {NzPaginationComponent} from 'ng-zorro-antd';
 
@@ -46,8 +46,10 @@ export class AccountingComponent {
       delete this.filters['createdAt[$gte]'];
     }
 
-    const from = moment((event[0] || undefined)).set({hour: '00', minute: '00', second: '00', millisecond: '00'});
-    const to = moment((event[1] || undefined)).set({hour: '11', minute: '59', second: '59', millisecond: '00'});
+    const from = moment((event[0] || undefined)).utcOffset(0);
+    const to = moment((event[1] || undefined)).utcOffset(0);
+    from.set({hour: 0, minute: 0, second: 0, millisecond: 0});
+    to.set({hour: 11, minute: 59, second: 59, millisecond: 0});
 
     this.filters = {...this.filters, 'createdAt[$gte]': from.toISOString(), 'createdAt[$lte]': to.toISOString()};
   }

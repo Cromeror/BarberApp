@@ -7,9 +7,10 @@ import {NzButtonModule, NzCardModule, NzDividerModule, NzGridModule, NzLayoutMod
 import {ItemPositionModule} from "../item-position/item-position.module";
 import {NzSpaceModule} from "ng-zorro-antd/space";
 import {CommonModule} from '@angular/common';
+import {YouTubePlayerModule} from '@angular/youtube-player';
 
 @NgModule({
-    imports: [QueueRoutingModule, NzButtonModule, NzLayoutModule, NzGridModule, NzDividerModule, NzCardModule, ItemPositionModule, NzSpaceModule, CommonModule],
+    imports: [QueueRoutingModule, NzButtonModule, NzLayoutModule, NzGridModule, NzDividerModule, NzCardModule, ItemPositionModule, NzSpaceModule, CommonModule, YouTubePlayerModule],
   declarations: [QueuePageComponent],
   exports: [QueuePageComponent]
 })

@@ -51,6 +51,19 @@ export class RealtimeApiService {
         }));
   }
 
+  findAllActive(limit = 10): Observable<PaginateTicket> {
+    return this.feathersInstance.service('tickets')
+      .watch()
+      .find({
+        query: {
+          active: true,
+          $sort: {position: 1},
+          $limit: limit
+        }
+      })
+      .pipe(take(1));
+  }
+
   private initConnection(): void {
     this.feathersInstance.authenticate(this.credentials)
       .then(() => {
@@ -89,19 +102,6 @@ export class RealtimeApiService {
             this.ticketsSubject.next(tickets);
           });
       });
-  }
-
-  findAllActive(limit = 10): Observable<PaginateTicket> {
-    return this.feathersInstance.service('tickets')
-      .watch()
-      .find({
-        query: {
-          active: true,
-          $sort: {position: 1},
-          $limit: limit
-        }
-      })
-      .pipe(take(1));
   }
 
   // expose logout

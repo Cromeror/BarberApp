@@ -2,13 +2,16 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DashboardComponent} from './dashboard.component';
 import {
-  NzButtonModule, NzDatePickerModule,
-  NzDividerModule, NzDropDownModule,
+  NzButtonModule,
+  NzDatePickerModule,
+  NzDividerModule,
+  NzDropDownModule, NzFormModule,
   NzGridModule,
-  NzIconModule,
+  NzIconModule, NzInputModule,
   NzLayoutModule,
   NzListModule,
-  NzMenuModule, NzPaginationModule,
+  NzMenuModule, NzModalModule,
+  NzPaginationModule,
   NzPopconfirmModule,
   NzTableModule
 } from 'ng-zorro-antd';
@@ -25,6 +28,8 @@ import {DialogFormClientModule} from '../dialog-form-client/dialog-form-client.m
 import {SettingsManagementComponent} from './settings-management/settings-management.component';
 import {VisitsPipeModule} from './visits-pipe/visits-pipe.module';
 import {AccountingComponent} from './accounting/accounting.component';
+import {PlaylistService} from '../api/playlist.service';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -70,9 +75,14 @@ const routes: Routes = [
     VisitsPipeModule,
     NzPaginationModule,
     NzDropDownModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzModalModule,
+    NzFormModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzInputModule
   ],
-  providers: [ServicesService, TicketsService, UserService]
+  providers: [FormBuilder, ServicesService, TicketsService, UserService, PlaylistService]
 })
 export class DashboardModule {
 }
