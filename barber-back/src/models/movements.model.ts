@@ -14,6 +14,10 @@ export default function (app: Application): typeof Model {
     type: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     hooks: {

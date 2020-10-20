@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {NzIconService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-root',

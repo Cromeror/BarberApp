@@ -4,6 +4,8 @@ import {RealtimeApiService} from '../../api/realtime-api.service';
 import {MovementsService, Type} from '../../api/movements.service';
 import {tap} from 'rxjs/operators';
 import {UserService} from '../../api/user.service';
+import {TicketServicesResponse} from '../../api/ticket-service.service';
+import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
 
 @Component({
   selector: 'app-ticket-management',
@@ -49,11 +51,22 @@ export class TicketManagementComponent {
   * */
   okEndingDialog(totalValue: number): void {
     this.movementsService
-      .create({type: Type.INCOMING, value: totalValue})
+      .create({type: Type.INCOMING, value: totalValue, description: this.servicesToString()})
       .pipe(tap(() => this.updateTicket(this.endingDialogConf.ticket.id, {status: 'served', active: false})))
       .subscribe(() => {
         this.showEndingDialog = false;
       });
+  }
+
+  private servicesToString(): string {
+    if (isNotNullOrUndefined(this.endingDialogConf)) {
+      return this.endingDialogConf.ticket?.ticket_services
+        .map((service: TicketServicesResponse) => {
+          return service.service?.name;
+        }).toString();
+    }
+
+    return '';
   }
 
   closeEndingDialog(): void {

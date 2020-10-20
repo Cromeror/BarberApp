@@ -2,13 +2,13 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DashboardComponent} from './dashboard.component';
 import {
-  NzButtonModule,
-  NzDividerModule,
+  NzButtonModule, NzDatePickerModule,
+  NzDividerModule, NzDropDownModule,
   NzGridModule,
   NzIconModule,
   NzLayoutModule,
   NzListModule,
-  NzMenuModule,
+  NzMenuModule, NzPaginationModule,
   NzPopconfirmModule,
   NzTableModule
 } from 'ng-zorro-antd';
@@ -24,6 +24,7 @@ import {DialogEndingServiceModule} from '../dialog-ending-service/dialog-ending-
 import {DialogFormClientModule} from '../dialog-form-client/dialog-form-client.module';
 import {SettingsManagementComponent} from './settings-management/settings-management.component';
 import {VisitsPipeModule} from './visits-pipe/visits-pipe.module';
+import {AccountingComponent} from './accounting/accounting.component';
 
 const routes: Routes = [
   {
@@ -42,17 +43,15 @@ const routes: Routes = [
           {path: 'clients', component: ClientManagementComponent},
         ]
       },
-      {
-        path: 'settings',
-        component: SettingsManagementComponent
-      }
+      {path: 'accounting', component: AccountingComponent},
+      {path: 'settings', component: SettingsManagementComponent}
     ]
   }
 ];
 
 @NgModule({
   declarations: [DashboardComponent, ServiceManagementComponent, TicketManagementComponent, ClientManagementComponent,
-    SettingsManagementComponent],
+    SettingsManagementComponent, AccountingComponent],
   imports: [
     CommonModule,
     NzLayoutModule,
@@ -68,7 +67,10 @@ const routes: Routes = [
     DialogEndingServiceModule,
     DialogFormClientModule,
     NzPopconfirmModule,
-    VisitsPipeModule
+    VisitsPipeModule,
+    NzPaginationModule,
+    NzDropDownModule,
+    NzDatePickerModule
   ],
   providers: [ServicesService, TicketsService, UserService]
 })

@@ -1,0 +1,48 @@
+<nz-table #basicTable [nzData]="dataSource?.data" nzFrontPagination="false">
+  <thead>
+  <tr>
+    <th nzCustomFilter>
+      Fecha
+      <nz-filter-trigger [(nzVisible)]="showFilterByDate" [nzDropdownMenu]="menu">
+        <i nz-icon nzType="filter" nzTheme="outline"></i>
+      </nz-filter-trigger>
+    </th>
+    <th>Concepto</th>
+    <th>Monto</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable?.data">
+    <td>{{data?.createdAt | date}}</td>
+    <td>{{data?.description}}</td>
+    <td>{{data?.value | currency: 'cop': '$': '1.0-0'}}</td>
+  </tr>
+  </tbody>
+</nz-table>
+<div nz-row nzJustify="end">
+  <nz-pagination [nzPageSize]="filters?.$limit || 10" [nzTotal]="dataSource?.total"
+                 [nzPageSizeOptions]="[10,20,50,100]" [nzShowSizeChanger]="true" [nzShowTotal]="totalDataRef"
+                 (nzPageIndexChange)="changePage($event)" (nzPageSizeChange)="changePageSize($event)"></nz-pagination>
+</div>
+
+<ng-template #totalDataRef>
+  <strong>{{dataSource?.total}} resultados</strong>
+  <nz-divider nzType="vertical"></nz-divider>
+</ng-template>
+
+<nz-dropdown-menu #menu="nzDropdownMenu" class="filterDropMenu">
+  <div nz-row class="ant-table-filter-dropdown" nzJustify="center">
+    <nz-col nzSpan="24" class="filterDropMenu--padding-8">
+      <nz-range-picker style="width: 100%;" nzAllowClear
+                       (nzOnCalendarChange)="onChangeFilterByDate($event)"></nz-range-picker>
+    </nz-col>
+    <nz-col nzSpan="24" class="filterDropMenu--left">
+      <button nz-button nzSize="small" (click)="resetFilterByDate()" style="margin-right: 8px;">
+        Limpiar
+      </button>
+      <button nz-button nzSize="small" nzType="primary" (click)="okFilterByDate()">
+        Filtrar
+      </button>
+    </nz-col>
+  </div>
+</nz-dropdown-menu>
