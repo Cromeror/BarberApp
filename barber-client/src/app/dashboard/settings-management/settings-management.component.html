@@ -2,47 +2,42 @@
   <ng-template #text><i nz-icon nzType="play-square" nzTheme="outline"></i> Reproductor</ng-template>
 </nz-divider>
 
+<form nz-form [formGroup]="form" (ngSubmit)="searchYoutubeVideo()">
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Ingrese la url del video">
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input formControlName="url" nz-input placeholder="Inserte la URL del video"/>
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="default" nzSearch [disabled]="!form.valid">
+          <i nz-icon nzType="plus"></i>
+        </button>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
 <nz-table #basicTable [nzData]="playlist?.data">
   <thead>
   <tr>
+    <th>Nombre</th>
     <th>Video - URL</th>
     <th style="text-align: right;">
-      <button nz-button nzType="primary" (click)="showNewVideoModal = true;">agregar</button>
+      <!--      <button nz-button nzType="primary" (click)="showNewVideoModal = true;">agregar</button>-->
     </th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let data of basicTable.data">
-    <td>{{ data.url }}</td>
+    <td></td>
     <td>
-      <a>Action 一 </a>
-      <nz-divider nzType="vertical"></nz-divider>
-      <a>Delete</a>
+      <a href="https://www.youtube.com/watch?v={{ data?.url }}" target="_blank">
+        https://www.youtube.com/watch?v={{ data.url }}
+      </a>
+    </td>
+    <td style="text-align: right;">
+      <a (click)="deleteVideo(data)">Delete</a>
     </td>
   </tr>
   </tbody>
 </nz-table>
-
-<nz-modal [(nzVisible)]="showNewVideoModal" nzTitle="The first Modal" (nzOnCancel)="showNewVideoModal = false;"
-          [nzFooter]="modalFooter" (nzOnOk)="handleOk()">
-
-  <form nz-form [formGroup]="form" (ngSubmit)="searchYoutubeVideo()">
-    <nz-form-item>
-      <nz-form-control nzErrorTip="Ingrese la url del video">
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-          <input formControlName="url" nz-input placeholder="Inserte la URL del video"/>
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-          <button nz-button nzType="default" nzSearch [disabled]="!form.valid">
-            <i nz-icon nzType="search"></i>
-          </button>
-        </ng-template>
-      </nz-form-control>
-    </nz-form-item>
-  </form>
-
-  <ng-template #modalFooter>
-    <button nz-button nzType="default" (click)="showNewVideoModal = false;">Cerrar</button>
-    <button nz-button nzType="primary" (click)="handleOk()">Agregar</button>
-  </ng-template>
-</nz-modal>
