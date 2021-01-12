@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: '/auth/login'},
   {path: 'public', loadChildren: () => import('./public/public.module').then(m => m.PublicModule)},
   {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
-  {path: 'monitor', loadChildren: () => import('./queue-view/queue.module').then(m => m.QueueModule)},
+  {path: 'monitor', loadChildren: () => import('./tickets-monitor/tickets-monitor.module').then(m => m.TicketsMonitorModule)},
   {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)}
 ];
 

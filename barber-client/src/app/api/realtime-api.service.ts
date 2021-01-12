@@ -7,6 +7,7 @@ import feathersSocketIOClient from '@feathersjs/socketio-client';
 import {Observable, ReplaySubject} from 'rxjs';
 import {PaginateTicket, Ticket, TicketResponse} from './tickets.service';
 import {take, tap} from 'rxjs/operators';
+import {PaginatePlaylist} from './playlist.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class RealtimeApiService {
   private socketInstance = io('http://localhost:3031');
   private feathersAuthClient = require('@feathersjs/authentication-client').default;
   private ticketsSubject: ReplaySubject<PaginateTicket>;
+  private playlistSubject: ReplaySubject<PaginatePlaylist>;
   private credentials = {
     strategy: 'local',
     email: 'cristobal@gmail.com',
@@ -33,6 +35,7 @@ export class RealtimeApiService {
       }));
 
     this.ticketsSubject = new ReplaySubject<PaginateTicket>(1);
+    this.playlistSubject = new ReplaySubject<PaginatePlaylist>(1);
     this.initConnection();
   }
 
@@ -40,15 +43,27 @@ export class RealtimeApiService {
     return this.ticketsSubject.asObservable();
   }
 
+  public get playlist$(): Observable<PaginatePlaylist> {
+    return this.playlistSubject.asObservable();
+  }
+
   initTicketsConnection(limit = 10): Observable<PaginateTicket> {
     return this.findAllActive(limit)
       .pipe(take(1),
         tap(() => {
-          this.registerUpdate();
+          this.registerTicketUpdate();
         }),
         tap(() => {
-          this.registerCreated();
+          this.registerTicketCreated();
         }));
+  }
+
+  initPlaylistConnection(limit = 10): Observable<PaginatePlaylist> {
+    return this.getPlaylist(limit).pipe(
+      tap(() => {
+        this.registerToPlaylistCreated();
+      })
+    );
   }
 
   findAllActive(limit = 10): Observable<PaginateTicket> {
@@ -64,6 +79,9 @@ export class RealtimeApiService {
       .pipe(take(1));
   }
 
+  /**
+   * Inicia toda las conexiones después de iniciar sesión con las credenciales.
+   */
   private initConnection(): void {
     this.feathersInstance.authenticate(this.credentials)
       .then(() => {
@@ -71,13 +89,24 @@ export class RealtimeApiService {
           .subscribe((tickets: PaginateTicket) => {
             this.ticketsSubject.next(tickets);
           });
+        this.initPlaylistConnection(10)
+          .subscribe((playlist: PaginatePlaylist) => {
+            this.playlistSubject.next(playlist);
+          });
       })
       .catch(err => {
         console.log('Wrong credentials!');
       });
   }
 
-  private registerUpdate(): void {
+  private getPlaylist(limit = 10): Observable<PaginatePlaylist> {
+    return this.feathersInstance.service('playlist')
+      .watch()
+      .find({query: {$limit: limit}})
+      .pipe(take(1));
+  }
+
+  private registerTicketUpdate(): void {
     this.feathersInstance.service('tickets')
       .on('patched', (data: Ticket) => {
         this.tickets$
@@ -94,12 +123,22 @@ export class RealtimeApiService {
       });
   }
 
-  private registerCreated(): void {
-    this.feathersInstance.service('tickets')
+  private registerTicketCreated(): void {
+    this.feathersInstance.service('playlist')
       .on('created', (data) => {
         this.findAllActive()
           .subscribe((tickets: PaginateTicket) => {
             this.ticketsSubject.next(tickets);
+          });
+      });
+  }
+
+  private registerToPlaylistCreated(): void {
+    this.feathersInstance.service('playlist')
+      .on('created', (data) => {
+        this.getPlaylist()
+          .subscribe((tickets: PaginatePlaylist) => {
+            this.playlistSubject.next(tickets);
           });
       });
   }

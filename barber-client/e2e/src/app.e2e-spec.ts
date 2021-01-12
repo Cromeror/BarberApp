@@ -8,7 +8,7 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display queue-view message', () => {
+  it('should display tickets-monitor message', () => {
     page.navigateTo();
     expect(page.getTitleText()).toEqual('barber-client app is running!');
   });

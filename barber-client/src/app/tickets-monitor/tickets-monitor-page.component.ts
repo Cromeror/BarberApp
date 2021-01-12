@@ -3,11 +3,11 @@ import {RealtimeApiService} from '../api/realtime-api.service';
 import {PaginateTicket, Status, TicketResponse} from '../api/tickets.service';
 
 @Component({
-  selector: 'app-welcome',
-  templateUrl: './queue-page.component.html',
-  styleUrls: ['./queue-page.component.scss']
+  selector: 'app-tickets-monitor-page',
+  templateUrl: './tickets-monitor-page.component.html',
+  styleUrls: ['./tickets-monitor-page.component.scss']
 })
-export class QueuePageComponent {
+export class TicketsMonitorPageComponent {
   paginateTicketInQueue: PaginateTicket;
   ticketsInService: TicketResponse[];
 
@@ -18,5 +18,7 @@ export class QueuePageComponent {
         this.paginateTicketInQueue = {...tickets, data: ticketsInQueue};
         this.ticketsInService = tickets.data.filter((ticket: TicketResponse) => ticket.status === Status.IN_SERVICE);
       });
+
+    realtimeApiService.playlist$.subscribe(console.log);
   }
 }
